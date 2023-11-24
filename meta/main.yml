@@ -1,6 +1,6 @@
 ---
 galaxy_info:
-  author: robertdebock
+  author: Adfinis
   role_name: bareos_fd
   description: Install and configure [Bareos](https://www.bareos.com/) File Daemon.
   license: Apache-2.0

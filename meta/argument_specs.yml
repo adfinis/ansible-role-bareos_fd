@@ -7,7 +7,7 @@ argument_specs:
     short_description: "Install and configure BareOS File Daemon on your system."
     description: >
       Install and configure BareOS File Daemon on your system.
-    author: Robert de Bock
+    author: Adfinis
     options:
       bareos_fd_backup_configurations:
         type: "bool"
