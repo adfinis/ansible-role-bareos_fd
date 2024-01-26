@@ -29,7 +29,7 @@ Client {
 #}
 {% if bareos_fd_plugins is defined %}
 {% for plugin in bareos_fd_plugins %}
-{% for item in bareos_fd_plugin_list if item.name == plugin.name %}
+{% for item in bareos_fd_plugin_list if item.name == plugin %}
 
 {% if item.plugin_dir is defined %}
   Plugin Directory = "{{ item.plugin_dir }}"
