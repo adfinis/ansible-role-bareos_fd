@@ -116,3 +116,5 @@
             - "!saved"
         - name: "disabled-message"
           enabled: no
+      bareos_fd_plugins:
+        - mariabackup
