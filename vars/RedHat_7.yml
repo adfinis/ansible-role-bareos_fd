@@ -1,0 +1,10 @@
+---
+
+bareos_fd_encryption_packages:
+  - python2-cryptography
+
+bareos_fd_debug_packages:
+  - bareos-debuginfo
+  - gdb
+
+bareos_fd_service: bareos-filedaemon
