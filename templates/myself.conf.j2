@@ -31,11 +31,16 @@ Client {
 {% for plugin in bareos_fd_plugins %}
 {% for item in bareos_fd_plugin_list if item.name == plugin %}
 
-{% if item.plugin_dir is defined %}
+{% if item.plugin_dir is defined %}  ## if plugin_dir is defined on plugin level
   Plugin Directory = "{{ item.plugin_dir }}"
+{% else %}  ## use bareos_fd_plugin_dir instead
+  Plugin Directory = "{{ bareos_fd_plugin_dir }}"
 {% endif %}
-{% if item.plugin_names is defined %}
+
+{% if item.plugin_names is defined %}  ## if plugin_names is defined on plugin level
   Plugin Names = "{{ item.plugin_names }}"
+{% else %}  ## use bareos_fd_plugin_default_name instead
+  Plugin Names = "{{ bareos_fd_plugin_default_name }}"
 {% endif %}
 
 {% endfor %}

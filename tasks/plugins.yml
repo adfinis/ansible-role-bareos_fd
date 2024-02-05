@@ -1,8 +1,8 @@
 ---
 
-- name: plugins | Get list of packages to install
+- name: plugins | Get data
   ansible.builtin.set_fact:
-    _packages:
+    _plugin_data:
       "{{ bareos_fd_plugin_list | selectattr('name', 'equalto', item) | list }}"
   loop: "{{ bareos_fd_plugins }}"
 
@@ -10,13 +10,8 @@
   ansible.builtin.debug:
     msg: "_packages: {{ _packages }}"
 
-# - name: plugins | Get Bareos plugin package names
-#   ansible.builtin.set_fact:
-#     _plugin_packages:
-#       "{{ bareos_fd_plugin_list | selectattr('name', 'match', item) | map(attribute='package_name') }}"
-#   loop: "{{ bareos_fd_plugins }}"
-#
-# - name: plugins | Install Bareos plugin packages
-#   ansible.builtin.package:
-#     name: "{{ _plugin_packages }}"
-#     state: present
+- name: plugins | Install Bareos plugin packages
+  ansible.builtin.package:
+    name: "{{ item.packages }}"
+    state: present
+  loop: _plugin_data

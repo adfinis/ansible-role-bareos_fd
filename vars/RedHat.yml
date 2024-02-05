@@ -1,8 +1,5 @@
 ---
 
-bareos_fd_encryption_packages:
-  - python3-cryptography
-
 bareos_fd_debug_packages:
   - bareos-filedaemon-debuginfo
   - gdb
@@ -13,11 +10,11 @@ bareos_fd_plugin_list:
   - name: mariabackup
     packages:
       - bareos-filedaemon-mariabackup-python-plugin
-      - mariadb-backup
+      - mariaDB-backup
 
   - name: mysql
     packages:
-      - mariadb-client
+      - python3-mysqlclient
 
   - name: posgresql
     packages:
