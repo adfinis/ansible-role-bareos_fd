@@ -4,6 +4,7 @@
   ansible.builtin.set_fact:
     _packages:
       "{{ bareos_fd_plugin_list | selectattr('name', 'equalto', item) | list }}"
+  loop: "{{ bareos_fd_plugins }}"
 
 - name: plugins | Print var
   ansible.builtin.debug:
