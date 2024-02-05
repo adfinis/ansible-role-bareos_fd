@@ -14,4 +14,4 @@
   ansible.builtin.package:
     name: "{{ item.packages }}"
     state: present
-  loop: _plugin_data
+  loop: "{{ _plugin_data }}"
