@@ -8,7 +8,7 @@
 
 - name: plugins | Print var
   ansible.builtin.debug:
-    msg: "_packages: {{ _packages }}"
+    msg: "Plugin data: {{ _plugin_data }}"
 
 - name: plugins | Install Bareos plugin packages
   ansible.builtin.package:
