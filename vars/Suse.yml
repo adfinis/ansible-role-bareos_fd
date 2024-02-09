@@ -9,7 +9,6 @@ bareos_fd_plugin_list:
   - name: mariabackup
     packages:
       - bareos-filedaemon-mariabackup-python-plugin
-      - MariaDB-backup
 
   - name: mysql
     packages:

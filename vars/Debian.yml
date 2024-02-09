@@ -10,11 +10,9 @@ bareos_fd_plugin_list:
   - name: mariabackup
     packages:
       - bareos-filedaemon-mariabackup-python-plugin
-      - mariadb-backup
 
   - name: mysql
     packages:
-      - mariadb-client
       - python3-mysqldb
 
   - name: postgresql
