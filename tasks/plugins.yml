@@ -2,13 +2,11 @@
 
 - name: plugins | Get data
   ansible.builtin.set_fact:
-    _plugin_data:
-      "{{ bareos_fd_plugin_list | selectattr('name', 'equalto', item) | list }}"
+    _plugin_data: >-
+      {{ _plugin_data + (bareos_fd_plugin_list | selectattr('name', 'equalto', item) | list) }}
   loop: "{{ bareos_fd_plugins }}"
-
-- name: plugins | Print var
-  ansible.builtin.debug:
-    msg: "Plugin data: {{ _plugin_data }}"
+  vars:
+    _plugin_data: []  # empty list to append to
 
 - name: plugins | Install Bareos plugin packages
   ansible.builtin.package:
