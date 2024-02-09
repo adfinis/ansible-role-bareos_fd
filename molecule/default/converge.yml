@@ -118,3 +118,6 @@
           enabled: no
       bareos_fd_plugins:
         - mariabackup
+        - mysql
+        - ldap
+        - postgresql
