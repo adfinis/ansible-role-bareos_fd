@@ -21,4 +21,5 @@ bareos_fd_plugin_list:
 
   - name: ldap
     packages:
+      - python3-ldap
       - bareos-filedaemon-ldap-python-plugin

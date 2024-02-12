@@ -23,7 +23,9 @@
         name:
           - bareos-filedaemon-mariabackup-python-plugin
           - bareos-filedaemon-postgresql-python-plugin
-          - bareos-filedaemon-ldap-python-plugin
+          # TODO disabled as package `bareos-filedaemon-ldap-python-plugin`
+          # has broken dependencies on Debian (python-ldap instead of python3-ldap)
+          # - bareos-filedaemon-ldap-python-plugin
         state: present
       check_mode: true
       diff: true
