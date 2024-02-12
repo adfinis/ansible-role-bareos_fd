@@ -24,7 +24,7 @@ galaxy_info:
         - "39"
     - name: opensuse
       versions:
-        - latest
+        - leap
     - name: Ubuntu
       versions:
         - jammy
