@@ -8,7 +8,7 @@ bareos_fd_debug_packages:
   - gdb
 
 bareos_fd_plugin_dir: "/usr/lib64/bareos/plugins"
-bareos_fd_plugin_default_name: python
+bareos_fd_plugin_name: python
 bareos_fd_plugin_list:
   - name: mariabackup
     packages:
