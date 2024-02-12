@@ -7,7 +7,7 @@ bareos_fd_debug_packages:
   - bareos-debuginfo
   - gdb
 
-bareos_fd_plugin_default_name: python2
+bareos_fd_plugin_default_name: python
 bareos_fd_plugin_list:
   - name: mariabackup
     packages:
@@ -15,7 +15,7 @@ bareos_fd_plugin_list:
 
   - name: mysql
     packages:
-      - python2-mysqlclient
+      - MySQL-python
 
   - name: postgresql
     packages:

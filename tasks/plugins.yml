@@ -13,3 +13,6 @@
     name: "{{ item.packages }}"
     state: present
   loop: "{{ _plugin_data }}"
+  notify:
+    - Check configuration
+    - Restart bareos-filedaemon

@@ -11,9 +11,11 @@ bareos_fd_plugin_list:
     packages:
       - bareos-filedaemon-mariabackup-python-plugin
 
+  # TODO RHEL offers no python-mysqlclient package per default.
+  # Check if PyMySQL is working with the plugin
   - name: mysql
     packages:
-      - python3-mysqlclient
+      - python3-PyMySQL
 
   - name: postgresql
     packages:
