@@ -20,8 +20,9 @@ platforms:
     command: /lib/systemd/systemd
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
-    privileged: false
+    privileged: true
     pre_build_image: true
+    systemd: true
 provisioner:
   name: ansible
 verifier:
