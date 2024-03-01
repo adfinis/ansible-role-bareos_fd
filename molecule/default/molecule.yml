@@ -13,16 +13,15 @@ lint: |
   yamllint .
   ansible-lint
 driver:
-  name: podman
+  name: docker
 platforms:
   - name: "bareosfd-${image:-fedora}-${tag:-latest}${TOX_ENVNAME}"
     image: "${namespace:-robertdebock}/${image:-fedora}:${tag:-latest}"
-    command: /lib/systemd/systemd
+    command: /sbin/init
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
-    privileged: true
-    pre_build_image: true
-    systemd: true
+    privileged: yes
+    pre_build_image: yes
 provisioner:
   name: ansible
 verifier:
