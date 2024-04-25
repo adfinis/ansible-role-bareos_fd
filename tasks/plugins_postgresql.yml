@@ -1,0 +1,37 @@
+---
+
+- name: postgresql | Enable local peer access for root user
+  ansible.builtin.lineinfile:
+    path: "{{ bareos_fd_plugin_psql_config_hba }}"
+    line: "local   all             root                                    peer"
+    state: present
+    backup: true
+  notify: Reload postgresql
+
+- name: postgresql | Make sure WAL archive dir is present
+  ansible.builtin.file:
+    state: directory
+    owner: postgres
+    group: postgres
+    mode: 0751
+    path: "{{ bareos_fd_plugin_psql_wal_archive_location }}"
+
+- name: postgresql | Enable archive mode in config
+  ansible.builtin.blockinfile:
+    path: "{{ bareos_fd_plugin_psql_config }}"
+    block: |
+      archive_mode = on
+      archive_command = 'test ! -f {{ bareos_fd_plugin_psql_wal_archive }}/%f && cp %p {{ bareos_fd_plugin_psql_wal_archive }}/%f'
+    state: present
+    backup: true
+  notify: Reload postgresql
+
+- name: postgresql | Create plugin_defaults file
+  ansible.builtin.copy:
+    content: |
+      {{ ansible_managed | comment }}
+      wal_archive_dir={{ bareos_fd_plugin_psql_wal_archive }}
+    dest: "/etc/bareos/bareos-fd.d/plugin_postgresql_defaults.ini"
+    owner: root
+    group: root
+    mode: 0644

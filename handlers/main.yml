@@ -9,3 +9,10 @@
   ansible.builtin.service:
     name: "{{ bareos_fd_service }}"
     state: restarted
+
+# required for the PostgreSQL backup plugin
+# only used when PostgreSQL is installed on the FD
+- name: Reload postgresql
+  ansible.builtin.service:
+    name: postgresql.service
+    state: reloaded

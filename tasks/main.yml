@@ -65,18 +65,31 @@
     - Check configuration
     - Restart bareos-filedaemon
 
-- name: Import encryption tasklist
+- name: Import encryption tasks
   ansible.builtin.import_tasks:
     file: encryption.yml
   when:
     - bareos_fd_encryption_enabled
 
-- name: Import plugin tasklist
+- name: Import plugin tasks
   ansible.builtin.import_tasks:
     file: plugins.yml
   when:
     - bareos_fd_plugins is defined
     - bareos_fd_plugins is iterable
+  tags:
+    - plugins
+
+- name: Import postgresql plugin tasks
+  ansible.builtin.import_tasks:
+    file: plugins_postgresql.yml
+  when:
+    - bareos_fd_plugins is defined
+    - bareos_fd_plugins is iterable
+    - '"postgresql" in bareos_fd_plugins'
+  tags:
+    - plugins
+    - plugins::postgresql
 
 - name: Start bareos-filedaemon
   ansible.builtin.service:

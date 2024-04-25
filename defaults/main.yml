@@ -60,3 +60,22 @@ bareos_fd_encryption_private_key: ""
 
 # The master public key to use.
 bareos_fd_encryption_master_public_key: ""
+
+##
+# defaults used by the bareos postgresql backup plugin
+##
+
+# postgresql major version
+bareos_fd_plugin_psql_version: 15
+
+# the location of the postgresql.conf file
+bareos_fd_plugin_psql_config: >-
+  /etc/postgresql/{{ bareos_fd_plugin_psql_version }}/main/postgresql.conf
+
+# the location of the pg_hba.conf file
+bareos_fd_plugin_psql_config_hba: >-
+  /etc/postgresql/{{ bareos_fd_plugin_psql_version }}/main/pg_hba.conf
+
+# where to store the WAL archive data
+bareos_fd_plugin_psql_wal_archive_location: >-
+  /var/lib/postgresql/{{ bareos_fd_plugin_psql_version }}/wal_archive
