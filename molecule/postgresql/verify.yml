@@ -1,0 +1,37 @@
+---
+- name: Verify
+  hosts: all
+  become: true
+  gather_facts: true
+
+  tasks:
+    - name: Check if port 9102 is listening
+      ansible.builtin.wait_for:
+        port: 9102
+
+    - name: Test configuration for warnings
+      ansible.builtin.command:
+        cmd: bareos-fd --test-config
+      become_user: bareos
+      register: bareos_fd_test_config
+      failed_when:
+        - bareos_fd_test_config.stdout_lines is search("There are configuration warnings")
+
+    # have to be specified in converge.yml: `bareos_fd_plugins`
+    - name: Check if plugin packages were installed
+      ansible.builtin.package:
+        name:
+          - bareos-filedaemon-mariabackup-python-plugin
+          - bareos-filedaemon-postgresql-python-plugin
+          - bareos-filedaemon-postgresql-python-plugin
+          - bareos-filedaemon-percona-xtrabackup-python-plugin
+          # TODO disabled as package `bareos-filedaemon-ldap-python-plugin`
+          # has broken dependencies on Debian (python-ldap instead of python3-ldap)
+          # - bareos-filedaemon-ldap-python-plugin
+        state: present
+      check_mode: true
+      diff: true
+      register: _result
+      failed_when: _result.changed
+      when:
+        - ansible_facts.os_family != "Archlinux"  # not supported for FD Plugins

@@ -1,0 +1,10 @@
+---
+
+roles:
+  - name: robertdebock.bootstrap
+  - name: geerlingguy.postgresql
+  - name: adfinis.bareos_repository
+
+collections:
+  - name: community.crypto
+  - name: community.general

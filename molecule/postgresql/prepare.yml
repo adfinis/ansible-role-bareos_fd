@@ -1,0 +1,55 @@
+---
+- name: Prepare
+  hosts: all
+  become: true
+  gather_facts: true
+
+  pre_tasks:
+
+    - name: RPM Block
+      when:
+        - ansible_facts.os_family == "RedHat" or
+          ansible_facts.os_family == "Fedora"
+      block:
+        - name: Install locales
+          ansible.builtin.package:
+            name:
+              - glibc-common
+              - glibc-locale-source
+            state: present
+
+        - name: Set locales
+          ansible.builtin.command:
+            cmd: localedef --inputfile=en_US --charmap=UTF-8 en_US.UTF-8
+
+    - name: DEB Block
+      when:
+        - ansible_facts.os_family == "Debian" or
+          ansible_facts.os_family == "Ubuntu"
+      block:
+        - name: Update Apt cache
+          ansible.builtin.apt:
+            update_cache: true
+
+        - name: Install locales
+          ansible.builtin.package:
+            name: locales
+            state: present
+
+        - name: Ensure locales exist
+          community.general.locale_gen:
+            name: en_US.UTF-8
+            state: present
+
+  roles:
+    - role: robertdebock.bootstrap
+    - role: adfinis.bareos_repository
+      bareos_repository_enable_tracebacks: true
+
+    - role: geerlingguy.postgresql
+      postgresql_databases:
+        - name: test
+      postgresql_users:
+        - name: test
+          password: test
+          db: test

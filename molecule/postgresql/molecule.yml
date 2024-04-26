@@ -1,0 +1,29 @@
+---
+#
+# Ansible managed
+#
+
+dependency:
+  name: galaxy
+  options:
+    role-file: molecule/postgresql/requirements.yml
+    requirements-file: molecule/postgresql/requirements.yml
+lint: |
+  set -e
+  yamllint .
+  ansible-lint
+driver:
+  name: podman
+platforms:
+  - name: "bareosfd-${MOLECULE_DISTRO:-fedora38}-${tag:-latest}${TOX_ENVNAME}"
+    image: "geerlingguy/docker-${MOLECULE_DISTRO:-fedora38}-ansible:latest"
+    command: /sbin/init
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    privileged: yes
+    pre_build_image: yes
+    systemd: true
+provisioner:
+  name: ansible
+verifier:
+  name: ansible
