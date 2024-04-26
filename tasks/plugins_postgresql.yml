@@ -14,7 +14,7 @@
     owner: postgres
     group: postgres
     mode: 0751
-    path: "{{ bareos_fd_plugin_psql_wal_archive_location }}"
+    path: "{{ bareos_fd_plugin_psql_wal_archive }}"
 
 - name: postgresql | Enable archive mode in config
   ansible.builtin.blockinfile:
@@ -29,7 +29,7 @@
 - name: postgresql | Create plugin_defaults file
   ansible.builtin.copy:
     content: |
-      {{ ansible_managed | comment }}
+      # File is managed by Ansible. Do not modify locally!
       wal_archive_dir={{ bareos_fd_plugin_psql_wal_archive }}
     dest: "/etc/bareos/bareos-fd.d/plugin_postgresql_defaults.ini"
     owner: root
