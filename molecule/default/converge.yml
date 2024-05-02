@@ -120,7 +120,6 @@
         - mariabackup
         - mysql
         - mysql_xtrabackup
-        - postgresql
         # TODO disabled as package `bareos-filedaemon-ldap-python-plugin`
         # has broken dependencies on Debian (python-ldap instead of python3-ldap)
         #  - ldap

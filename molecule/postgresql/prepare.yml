@@ -5,7 +5,6 @@
   gather_facts: true
 
   pre_tasks:
-
     - name: RPM Block
       when:
         - ansible_facts.os_family == "RedHat" or
@@ -43,6 +42,7 @@
 
   roles:
     - role: robertdebock.bootstrap
+
     - role: adfinis.bareos_repository
       bareos_repository_enable_tracebacks: true
 

@@ -1,4 +1,5 @@
 ---
+
 - name: Converge
   hosts: all
   become: true
@@ -117,10 +118,4 @@
         - name: "disabled-message"
           enabled: false
       bareos_fd_plugins:
-        - mariabackup
-        - mysql
-        - mysql_xtrabackup
         - postgresql
-        # TODO disabled as package `bareos-filedaemon-ldap-python-plugin`
-        # has broken dependencies on Debian (python-ldap instead of python3-ldap)
-        #  - ldap
