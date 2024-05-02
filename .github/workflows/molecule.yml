@@ -92,10 +92,7 @@ jobs:
           path: "${{ github.repository }}"
 
       - name: molecule postgresql plugin scenario
-        uses: robertdebock/molecule-action@6.0.0
+        uses: gofrolist/molecule-action@v2
         with:
-          image: ${{ matrix.config.image }}
-          tag: ${{ matrix.config.tag }}
-          options: "-s postgresql"
-          # TODO `scenario` option seems to be broken in robertdebock/molecule-actions
-          # scenario: postgresql
+          molecule_command: test
+          molecule_args: "--scenario-name postgresql"
