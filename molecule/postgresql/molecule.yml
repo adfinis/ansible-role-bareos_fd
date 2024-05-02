@@ -13,7 +13,7 @@ lint: |
   yamllint .
   ansible-lint
 driver:
-  name: podman
+  name: docker
 platforms:
   - name: "bareosfd-${MOLECULE_DISTRO:-fedora38}-${tag:-latest}${TOX_ENVNAME}"
     image: "geerlingguy/docker-${MOLECULE_DISTRO:-fedora38}-ansible:latest"
