@@ -45,7 +45,7 @@ jobs:
           - image: "fedora"
             tag: "38"
           - image: "fedora"
-            tag: "latest"
+            tag: "39"
           - image: "opensuse"
             tag: "latest"
           - image: "ubuntu"
@@ -71,9 +71,31 @@ jobs:
           tag: ${{ matrix.config.tag }}
           scenario: default
 
+  test_postgresql:
+    needs:
+      - lint
+    runs-on: ubuntu-20.04
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+          - image: "debian"
+            tag: "latest"
+          - image: "fedora"
+            tag: "39"
+          - image: "ubuntu"
+            tag: "focal"
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+        with:
+          path: "${{ github.repository }}"
+
       - name: molecule postgresql plugin scenario
         uses: robertdebock/molecule-action@6.0.0
         with:
           image: ${{ matrix.config.image }}
           tag: ${{ matrix.config.tag }}
-          scenario: postgresql
+          options: "-s postgresql"
+          # TODO `scenario` option seems to be broken in robertdebock/molecule-actions
+          # scenario: postgresql
