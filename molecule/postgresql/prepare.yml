@@ -1,8 +1,16 @@
 ---
+
 - name: Prepare
   hosts: all
   become: true
   gather_facts: true
+  vars:
+    postgresql_databases:
+      - name: test
+    postgresql_users:
+      - name: test
+        password: test
+        db: test
 
   pre_tasks:
     - name: RPM Block
@@ -47,9 +55,3 @@
       bareos_repository_enable_tracebacks: true
 
     - role: geerlingguy.postgresql
-      postgresql_databases:
-        - name: test
-      postgresql_users:
-        - name: test
-          password: test
-          db: test
