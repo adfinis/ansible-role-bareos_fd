@@ -15,8 +15,8 @@ lint: |
 driver:
   name: docker
 platforms:
-  - name: "bareosfd-${MOLECULE_DISTRO:-fedora38}-${tag:-latest}${TOX_ENVNAME}"
-    image: "geerlingguy/docker-${MOLECULE_DISTRO:-fedora38}-ansible:latest"
+  - name: "bareosfd-${image:-fedora38}-${tag:-latest}${TOX_ENVNAME}"
+    image: "geerlingguy/docker-${image:-fedora38}-ansible:latest"
     command: /sbin/init
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
