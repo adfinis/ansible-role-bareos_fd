@@ -43,12 +43,16 @@
     src: "templates/plugin_postgresql_bareos_wal_archive.conf.j2"
     dest: "{{ bareos_fd_plugin_psql_root_dir }}/conf.d/bareos_postgresql_wal_archive.conf"
     backup: true
+    owner: root
+    group: root
+    mode: "0644"
   notify: Reload postgresql
 
 - name: plugins_postgresql | Create plugin_defaults file
   ansible.builtin.template:
     src: "templates/plugin_postgresql_defaults.ini.j2"
     dest: "/etc/bareos/bareos-fd.d/plugin_postgresql_defaults.ini"
+    backup: true
     owner: root
     group: root
     mode: "0644"
