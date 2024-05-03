@@ -37,11 +37,11 @@ bareos_fd_plugin_psql_root_dir: >-
 
 # the location of the postgresql.conf file
 bareos_fd_plugin_psql_config: >-
- {{ bareos_fd_plugin_psql_root_dir}}/postgresql.conf
+ {{ bareos_fd_plugin_psql_root_dir }}/postgresql.conf
 
 # the location of the pg_hba.conf file
 bareos_fd_plugin_psql_config_hba: >-
- {{ bareos_fd_plugin_psql_root_dir}}/pg_hba.conf
+ {{ bareos_fd_plugin_psql_root_dir }}/pg_hba.conf
 
 # where to store the WAL archive data
 bareos_fd_plugin_psql_wal_archive: >-
