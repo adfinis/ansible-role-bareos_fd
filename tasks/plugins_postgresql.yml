@@ -1,17 +1,26 @@
 ---
 
-- name: plugins_postgresql | Fetch postgresql version
-  ansible.builtin.command:
-    cmd: "pg_config --version"
-  changed_when: false
-  register: _psql_version
-  # stdout example: "PostgreSQL 14.11 (Ubuntu 14.11-0ubuntu0.22.04.1)""
+- name: plugins_postgresql | Determine postgresql version for Debian/Ubuntu
+  when:
+    - ansible_facts.os_family == "Debian"
+  block:
+    - name: plugins_postgresql | Fetch postgresql version
+      ansible.builtin.command:
+        cmd: "pg_config --version"
+      changed_when: false
+      register: _psql_version
+      # stdout example: "PostgreSQL 14.11 (Ubuntu 14.11-0ubuntu0.22.04.1)""
 
-# var is used by `bareos_fd_plugin_psql_root_dir`in vars/<Distro>.yml
-# to determine file location for configs (Debian/Ubuntu).
-- name: plugins_postgresql | Determine postgresql major version
-  ansible.builtin.set_fact:
-    bareos_fd_plugin_psql_version: "{{ ((_psql_version.stdout | split)[1] | split('.'))[0] }}"
+    # var is used by `bareos_fd_plugin_psql_root_dir`in vars/<Distro>.yml
+    # to determine file location for configs (Debian/Ubuntu).
+    - name: plugins_postgresql | Register postgresql major version
+      ansible.builtin.set_fact:
+        bareos_fd_plugin_psql_version: "{{ ((_psql_version.stdout | split)[1] | split('.'))[0] }}"
+
+    - name: plugins_postgresql | Validate version number
+      ansible.builtin.assert:
+        that:
+          - ( bareos_fd_plugin_psql_version | int) is number
 
 - name: plugins_postgresql | Enable local peer access for root user
   ansible.builtin.lineinfile:
