@@ -2,7 +2,7 @@
 
 - name: plugins_postgresql | Fetch postgresql version
   ansible.builtin.command:
-    cmd: "/usr/bin/pg_config --version"
+    cmd: "pg_config --version"
   changed_when: false
   register: _psql_version
   # stdout example: "PostgreSQL 14.11 (Ubuntu 14.11-0ubuntu0.22.04.1)""
