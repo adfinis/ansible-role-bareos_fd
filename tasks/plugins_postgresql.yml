@@ -4,6 +4,7 @@
   ansible.builtin.lineinfile:
     path: "{{ bareos_fd_plugin_psql_config_hba }}"
     line: "local   all  root  peer"
+    regexp: '^local\\s+all\\s+root\\s+peer$'  # match for any amount of spaces
     state: present
     backup: true
   notify: Reload postgresql
@@ -27,10 +28,8 @@
   notify: Reload postgresql
 
 - name: plugins_postgresql | Create plugin_defaults file
-  ansible.builtin.copy:
-    content: |
-      # File is managed by Ansible. Do not modify locally!
-      wal_archive_dir={{ bareos_fd_plugin_psql_wal_archive }}
+  ansible.builtin.template:
+    src: "templates/plugin_postgresql_defaults.ini.j2"
     dest: "/etc/bareos/bareos-fd.d/plugin_postgresql_defaults.ini"
     owner: root
     group: root
