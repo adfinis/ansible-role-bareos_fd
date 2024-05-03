@@ -80,7 +80,7 @@ jobs:
       matrix:
         config:
           - image: "debian12"
-          - image: "fedora39"
+          - image: "fedora38"
           - image: "ubuntu2204"
     steps:
       - name: checkout
