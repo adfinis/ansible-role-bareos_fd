@@ -93,3 +93,5 @@ jobs:
         with:
           molecule_command: test
           molecule_args: "--scenario-name postgresql"
+        env:
+          image: ${{ matrix.config.image }}
