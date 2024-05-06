@@ -98,3 +98,11 @@
     quiet: true
   when:
     - bareos_fd_encryption_enabled
+
+- name: assert | Test bareos_fd_plugins
+  ansible.builtin.assert:
+    that:
+      - bareos_fd_plugins is iterable
+    quiet: true
+  when:
+    - bareos_fd_plugins is defined
