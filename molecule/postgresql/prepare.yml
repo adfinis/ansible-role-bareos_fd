@@ -15,8 +15,7 @@
   pre_tasks:
     - name: RPM Block
       when:
-        - ansible_facts.os_family == "RedHat" or
-          ansible_facts.os_family == "Fedora"
+        - ansible_facts.os_family == "RedHat"
       block:
         - name: Install locales
           ansible.builtin.package:
@@ -31,8 +30,7 @@
 
     - name: DEB Block
       when:
-        - ansible_facts.os_family == "Debian" or
-          ansible_facts.os_family == "Ubuntu"
+        - ansible_facts.os_family == "Debian"
       block:
         - name: Update Apt cache
           ansible.builtin.apt:
