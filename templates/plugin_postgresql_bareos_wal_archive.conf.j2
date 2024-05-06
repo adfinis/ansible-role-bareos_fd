@@ -1,3 +1,6 @@
 {{ ansible_managed | comment }}
 archive_mode = on
 archive_command = 'test ! -f {{ bareos_fd_plugin_psql_wal_archive | default("") }}/%f && cp %p {{ bareos_fd_plugin_psql_wal_archive | default("") }}/%f'
+
+# Restore command for PostgreSQL >=12 (https://docs.bareos.org/TasksAndConcepts/Plugins.html#postgresql-12)
+restore_command = 'cp {{ bareos_fd_plugin_psql_wal_archive | default("") }}/%f %p'
