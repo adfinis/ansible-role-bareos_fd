@@ -5,6 +5,27 @@
   gather_facts: true
 
   tasks:
+    - name: Include default and main vars
+      ansible.builtin.include_vars:
+        file: "{{ lookup('env', 'MOLECULE_PROJECT_DIRECTORY') }}/{{ item }}/main.yml"
+      loop:
+        - defaults
+        - vars
+
+    - name: Include OS-specific vars
+      ansible.builtin.include_vars: "{{ item }}"
+      with_first_found:
+        - "{{ lookup('env', 'MOLECULE_PROJECT_DIRECTORY') }}/vars/{{ ansible_facts.distribution }}_{{ ansible_facts.distribution_major_version }}.yml"
+        - "{{ lookup('env', 'MOLECULE_PROJECT_DIRECTORY') }}/vars/{{ ansible_facts.os_family }}.yml"
+
+    - name: Populate service facts
+      ansible.builtin.service_facts:
+
+    - name: Check if service is running
+      ansible.builtin.assert:
+        that:
+          - ansible_facts.services[bareos_fd_service+".service"].state == "running"
+
     - name: Check if port 9102 is listening
       ansible.builtin.wait_for:
         port: 9102
@@ -27,5 +48,21 @@
       diff: true
       register: _result
       failed_when: _result.changed
-      when:
-        - ansible_facts.os_family != "Archlinux"  # not supported for FD Plugins
+
+    - name: Fetch file and directory stats
+      ansible.builtin.stat:
+        path: "{{ item }}"
+      loop:
+        - "{{ bareos_fd_plugin_psql_root_dir }}"
+        - "{{ bareos_fd_plugin_psql_config }}"
+        - "{{ bareos_fd_plugin_psql_config_hba }}"
+        - "{{ bareos_fd_plugin_psql_wal_archive }}"
+      register: _file_stats
+
+    - name: Check if required files and directories exist
+      ansible.builtin.assert:
+        that:
+          - item.stat.exists
+          - item.stat.readable
+          - item.stat.isdir or item.stat.isreg
+      loop: "{{ _file_stats.results }}"
