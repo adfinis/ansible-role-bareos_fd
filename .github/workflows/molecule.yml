@@ -79,9 +79,12 @@ jobs:
       fail-fast: false
       matrix:
         config:
+          - image: "debian11"
           - image: "debian12"
           - image: "fedora38"
+          - image: "fedora39"
           - image: "ubuntu2204"
+          - image: "rockylinux9"
     steps:
       - name: checkout
         uses: actions/checkout@v3
