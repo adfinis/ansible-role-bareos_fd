@@ -62,8 +62,10 @@ bareos_fd_encryption_private_key: ""
 bareos_fd_encryption_master_public_key: ""
 
 ##
-# defaults used by the bareos postgresql backup plugin
+# Defaults used by the Bareos PostgreSQL backup plugin
 ##
 
-# postgresql major version
+# PostgreSQL major version
+# This value will be overwritten on Debian based distros by the actual version in-use.
+# On Red Hat based distros, the value is not required as of now.
 bareos_fd_plugin_psql_version: 15

@@ -1,5 +1,7 @@
 ---
 
+bareos_fd_service: bareos-fd
+
 bareos_fd_debug_packages:
   - bareos-filedaemon-debuginfo
   - gdb
