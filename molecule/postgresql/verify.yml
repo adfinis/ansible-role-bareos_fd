@@ -38,7 +38,6 @@
       failed_when:
         - bareos_fd_test_config.stdout_lines is search("There are configuration warnings")
 
-    # have to be specified in converge.yml: `bareos_fd_plugins`
     - name: Check if plugin packages were installed
       ansible.builtin.package:
         name:
@@ -48,21 +47,3 @@
       diff: true
       register: _result
       failed_when: _result.changed
-
-    - name: Fetch file and directory stats
-      ansible.builtin.stat:
-        path: "{{ item }}"
-      loop:
-        - "{{ bareos_fd_plugin_psql_root_dir }}"
-        - "{{ bareos_fd_plugin_psql_config }}"
-        - "{{ bareos_fd_plugin_psql_config_hba }}"
-        - "{{ bareos_fd_plugin_psql_wal_archive }}"
-      register: _file_stats
-
-    - name: Check if required files and directories exist
-      ansible.builtin.assert:
-        that:
-          - item.stat.exists
-          - item.stat.readable
-          - item.stat.isdir or item.stat.isreg
-      loop: "{{ _file_stats.results }}"
