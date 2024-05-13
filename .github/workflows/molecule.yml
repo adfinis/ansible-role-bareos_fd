@@ -82,7 +82,8 @@ jobs:
           - image: "debian11"
           - image: "debian12"
           - image: "fedora38"
-          - image: "fedora39"
+          # TODO 39 not yet supported by geerlingguy.postgresql
+          # - image: "fedora39"
           - image: "ubuntu2204"
           - image: "rockylinux9"
     steps:
