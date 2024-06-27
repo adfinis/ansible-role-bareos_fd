@@ -1,0 +1,49 @@
+---
+- name: Verify
+  hosts: all
+  become: true
+  gather_facts: true
+
+  tasks:
+    - name: Include default and main vars
+      ansible.builtin.include_vars:
+        file: "{{ lookup('env', 'MOLECULE_PROJECT_DIRECTORY') }}/{{ item }}/main.yml"
+      loop:
+        - defaults
+        - vars
+
+    - name: Include OS-specific vars
+      ansible.builtin.include_vars: "{{ item }}"
+      with_first_found:
+        - "{{ lookup('env', 'MOLECULE_PROJECT_DIRECTORY') }}/vars/{{ ansible_facts.distribution }}_{{ ansible_facts.distribution_major_version }}.yml"
+        - "{{ lookup('env', 'MOLECULE_PROJECT_DIRECTORY') }}/vars/{{ ansible_facts.os_family }}.yml"
+
+    - name: Populate service facts
+      ansible.builtin.service_facts:
+
+    - name: Check if service is running
+      ansible.builtin.assert:
+        that:
+          - ansible_facts.services[bareos_fd_service+".service"].state == "running"
+
+    - name: Check if port 9102 is listening
+      ansible.builtin.wait_for:
+        port: 9102
+
+    - name: Test configuration for warnings
+      ansible.builtin.command:
+        cmd: bareos-fd --test-config
+      become_user: bareos
+      register: bareos_fd_test_config
+      failed_when:
+        - bareos_fd_test_config.stdout_lines is search("There are configuration warnings")
+
+    - name: Check if plugin packages were installed
+      ansible.builtin.package:
+        name:
+          - bareos-filedaemon-postgresql-python-plugin
+        state: present
+      check_mode: true
+      diff: true
+      register: _result
+      failed_when: _result.changed

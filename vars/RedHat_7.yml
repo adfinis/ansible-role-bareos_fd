@@ -28,3 +28,22 @@ bareos_fd_plugin_list:
   - name: mysql_xtrabackup
     packages:
       - bareos-filedaemon-percona-xtrabackup-python-plugin
+
+##
+# Bareos PostgreSQL backup plugin
+##
+
+bareos_fd_plugin_psql_root_dir: >-
+  /var/lib/pgsql/data
+
+# The location of the postgresql.conf file
+bareos_fd_plugin_psql_config: >-
+ {{ bareos_fd_plugin_psql_root_dir }}/postgresql.conf
+
+# The location of the pg_hba.conf file
+bareos_fd_plugin_psql_config_hba: >-
+ {{ bareos_fd_plugin_psql_root_dir }}/pg_hba.conf
+
+# Where to store the WAL archive data
+bareos_fd_plugin_psql_wal_archive: >-
+ /var/lib/pgsql/wal_archive

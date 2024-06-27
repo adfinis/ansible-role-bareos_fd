@@ -20,7 +20,8 @@ jobs:
       - name: checkout
         uses: actions/checkout@v3
       - name: ansible-lint
-        uses: ansible-community/ansible-lint-action@main
+        uses: ansible/ansible-lint@main
+
   test:
     needs:
       - lint
@@ -44,7 +45,7 @@ jobs:
           - image: "fedora"
             tag: "38"
           - image: "fedora"
-            tag: "latest"
+            tag: "39"
           - image: "opensuse"
             tag: "latest"
           - image: "ubuntu"
@@ -56,12 +57,45 @@ jobs:
         uses: actions/checkout@v3
         with:
           path: "${{ github.repository }}"
+
       - name: disable apparmor for mysql
         run: sudo ln -s /etc/apparmor.d/usr.sbin.mysqld /etc/apparmor.d/disable/
+
       - name: parse apparmor for mysql
         run: sudo apparmor_parser -R /etc/apparmor.d/usr.sbin.mysqld
+
       - name: molecule
         uses: robertdebock/molecule-action@6.0.0
         with:
           image: ${{ matrix.config.image }}
           tag: ${{ matrix.config.tag }}
+          scenario: default
+
+  test_postgresql:
+    needs:
+      - lint
+    runs-on: ubuntu-20.04
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+          - image: "debian11"
+          - image: "debian12"
+          - image: "fedora38"
+          # TODO 39 not yet supported by geerlingguy.postgresql
+          # - image: "fedora39"
+          - image: "ubuntu2204"
+          - image: "rockylinux9"
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+        with:
+          path: "${{ github.repository }}"
+
+      - name: molecule postgresql plugin scenario
+        uses: gofrolist/molecule-action@v2
+        with:
+          molecule_command: test
+          molecule_args: "--scenario-name postgresql"
+        env:
+          image: ${{ matrix.config.image }}
