@@ -16,3 +16,4 @@
   notify:
     - Check configuration
     - Restart bareos-filedaemon
+  ignore_errors: "{{ ansible_check_mode }}"
