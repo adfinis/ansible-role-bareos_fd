@@ -3,6 +3,7 @@
 - name: encryption | Install python cryptography package
   ansible.builtin.package:
     name: "{{ bareos_fd_encryption_packages }}"
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: encryption | Generate private key
   community.crypto.openssl_privatekey:
@@ -14,6 +15,7 @@
   register: bareos_fd_encryption_private_key_generated
   when:
     - bareos_fd_encryption_private_key == ""
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: encryption | Place private key
   ansible.builtin.copy:
@@ -24,6 +26,7 @@
     mode: "0600"
   when:
     - bareos_fd_encryption_private_key != ""
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: encryption | Generate csr for public key
   community.crypto.openssl_csr:
@@ -33,6 +36,7 @@
     owner: bareos
     group: bareos
     mode: "0644"
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: encryption | Generate public key
   community.crypto.x509_certificate:
@@ -45,6 +49,7 @@
     group: bareos
     mode: "0644"
   register: bareos_fd_encryption_public_key
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: encryption | Combine private and public key
   ansible.builtin.copy:
@@ -56,6 +61,7 @@
   notify:
     - Check configuration
     - Restart bareos-filedaemon
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: encryption | Place master public key
   ansible.builtin.copy:
@@ -67,3 +73,4 @@
   notify:
     - Check configuration
     - Restart bareos-filedaemon
+  ignore_errors: "{{ ansible_check_mode }}"
