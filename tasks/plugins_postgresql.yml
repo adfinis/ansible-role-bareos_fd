@@ -23,6 +23,12 @@
         that:
           - ( bareos_fd_plugin_psql_version | int) is number
 
+- name: plugins_postgresql | Make sure psql root user is present
+  community.postgresql.postgresql_user:
+    name: root
+    no_password_changes: true
+    role_attr_flags: SUPERUSER
+
 - name: plugins_postgresql | Enable local peer access for root user
   ansible.builtin.lineinfile:
     path: "{{ bareos_fd_plugin_psql_config_hba }}"
@@ -70,6 +76,14 @@
     group: root
     mode: "0644"
   notify: Reload postgresql
+
+- name: plugins_postgresql | PostgreSQL archive_mode info
+  ansible.builtin.debug:
+    msg: >-
+      The included PSQL config enables the option `archive_mode`
+      which requires a service restart. We don't do this in this role,
+      to avoid unexpected downtimes. Please make sure to restart
+      the PostgreSQL service or else the backups will not work!
 
 - name: plugins_postgresql | Create plugin_defaults file
   ansible.builtin.template:
