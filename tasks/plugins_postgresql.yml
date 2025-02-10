@@ -65,7 +65,9 @@
     regexp: '^#?(\s+)?include_dir'  # match also commented line
     state: present
     backup: true
-  notify: Reload postgresql
+  notify:
+    - Reload postgresql
+    - PostgreSQL archive_mode info
 
 - name: plugins_postgresql | Deploy config for wal archive mode
   ansible.builtin.template:
@@ -75,15 +77,9 @@
     owner: root
     group: root
     mode: "0644"
-  notify: Reload postgresql
-
-- name: plugins_postgresql | PostgreSQL archive_mode info
-  ansible.builtin.debug:
-    msg: >-
-      The included PSQL config enables the option `archive_mode`
-      which requires a service restart. We don't do this in this role,
-      to avoid unexpected downtimes. Please make sure to restart
-      the PostgreSQL service or else the backups will not work!
+  notify:
+    - Reload postgresql
+    - PostgreSQL archive_mode info
 
 - name: plugins_postgresql | Create plugin_defaults file
   ansible.builtin.template:
