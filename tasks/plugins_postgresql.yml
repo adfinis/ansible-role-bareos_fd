@@ -28,14 +28,8 @@
 
 - name: plugins_postgresql | Install psycopg for community.postgresql
   ansible.builtin.package:
-    name: python3-psycopg
+    name: python3-psycopg2
     state: present
-  # avoid installting multiple different psycopg versions.
-  # both psycopg2 and psycopg3 are supported by community.postgresql
-  when:
-    - '"python3-psycopg" not in ansible_facts.packages'
-    - '"python3-psycopg2" not in ansible_facts.packages'
-    - '"python3-psycopg3" not in ansible_facts.packages'
 
 - name: plugins_postgresql | Make sure psql root user is present
   community.postgresql.postgresql_user:
