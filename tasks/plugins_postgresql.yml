@@ -23,9 +23,6 @@
         that:
           - ( bareos_fd_plugin_psql_version | int) is number
 
-- name: plugins_postgresql | Populate package facts
-  ansible.builtin.package_facts:
-
 - name: plugins_postgresql | Install psycopg for community.postgresql
   ansible.builtin.package:
     name: python3-psycopg2
