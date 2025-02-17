@@ -18,6 +18,11 @@
         - "{{ lookup('env', 'MOLECULE_PROJECT_DIRECTORY') }}/vars/{{ ansible_facts.distribution }}_{{ ansible_facts.distribution_major_version }}.yml"
         - "{{ lookup('env', 'MOLECULE_PROJECT_DIRECTORY') }}/vars/{{ ansible_facts.os_family }}.yml"
 
+    - name: Enforce PostgreSQL service restart
+      ansible.builtin.service:
+        name: postgresql.service
+        state: restarted
+
     - name: Populate service facts
       ansible.builtin.service_facts:
 
@@ -47,3 +52,12 @@
       diff: true
       register: _result
       failed_when: _result.changed
+
+    - name: Test postgresql peer auth for root
+      community.postgresql.postgresql_info:
+        db: postgres
+        login_user: root
+        filter: version
+      register: _psql_result
+      failed_when:
+        - '"postgresql" not in _psql_result.version.raw | lower'

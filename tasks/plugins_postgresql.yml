@@ -23,6 +23,19 @@
         that:
           - ( bareos_fd_plugin_psql_version | int) is number
 
+- name: plugins_postgresql | Install psycopg for community.postgresql
+  ansible.builtin.package:
+    name: python3-psycopg2
+    state: present
+
+- name: plugins_postgresql | Make sure psql root user is present
+  community.postgresql.postgresql_user:
+    name: root
+    no_password_changes: true
+    role_attr_flags: SUPERUSER
+  become: true
+  become_user: postgres
+
 - name: plugins_postgresql | Enable local peer access for root user
   ansible.builtin.lineinfile:
     path: "{{ bareos_fd_plugin_psql_config_hba }}"
@@ -59,7 +72,9 @@
     regexp: '^#?(\s+)?include_dir'  # match also commented line
     state: present
     backup: true
-  notify: Reload postgresql
+  notify:
+    - Reload postgresql
+    - PostgreSQL archive_mode info
 
 - name: plugins_postgresql | Deploy config for wal archive mode
   ansible.builtin.template:
@@ -69,7 +84,9 @@
     owner: root
     group: root
     mode: "0644"
-  notify: Reload postgresql
+  notify:
+    - Reload postgresql
+    - PostgreSQL archive_mode info
 
 - name: plugins_postgresql | Create plugin_defaults file
   ansible.builtin.template:

@@ -10,12 +10,13 @@
 - name: Import assert.yml
   ansible.builtin.import_tasks:
     file: assert.yml
-  run_once: yes
+  run_once: true
   delegate_to: localhost
 
 - name: Install packages
   ansible.builtin.package:
     name: bareos-filedaemon
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: Install debug packages
   ansible.builtin.package:
