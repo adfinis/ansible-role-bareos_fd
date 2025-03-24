@@ -71,3 +71,15 @@ argument_specs:
         elements: "str"
         required: false
         version_added: v1.1.0
+      bareos_fd_plugin_ldap_uri:
+        type: "str"
+        default: ""
+        description: "LDAP URI"
+      bareos_fd_plugin_ldap_bind_dn:
+        type: "str"
+        default: ""
+        description: "LDAP bind DN"
+      bareos_fd_plugin_ldap_password:
+        type: "str"
+        default: ""
+        description: "LDAP password for the provided bind DN"
