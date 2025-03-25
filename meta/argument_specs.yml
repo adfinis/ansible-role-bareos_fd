@@ -75,8 +75,8 @@ argument_specs:
         type: "str"
         default: ""
         description: >-
-          LDAP URI. Colon character ":" has to be escaped. Example:
-          ldap\\://localhost:basedn=dc=example,dc=com
+          LDAP URI. Example:
+          ldap://localhost:basedn=dc=example,dc=com
       bareos_fd_plugin_ldap_bind_dn:
         type: "str"
         default: ""

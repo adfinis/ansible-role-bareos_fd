@@ -1,4 +1,4 @@
 {{ ansible_managed | comment }}
-uri={{ bareos_fd_plugin_ldap_uri | default("") }}
-bind_dn={{ bareos_fd_plugin_ldap_bind_dn | default("") }}
-password={{ bareos_fd_plugin_ldap_password | default("") }}
+uri={{ bareos_fd_plugin_ldap_uri | replace(':','\\\:') }}
+bind_dn={{ bareos_fd_plugin_ldap_bind_dn }}
+password={{ bareos_fd_plugin_ldap_password }}
