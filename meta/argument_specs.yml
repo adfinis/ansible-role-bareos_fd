@@ -76,11 +76,19 @@ argument_specs:
         default: ""
         description: >-
           LDAP URI. Example:
-          ldap://localhost:basedn=dc=example,dc=com
+          ldap://localhost
+      bareos_fd_plugin_ldap_base_dn:
+        type: "str"
+        default: ""
+        description: >-
+          LDAP base DN. Example:
+          dc=example,dc=com
       bareos_fd_plugin_ldap_bind_dn:
         type: "str"
         default: ""
-        description: "LDAP bind DN"
+        description: >-
+          LDAP bind DN to use for LDAP authentication. Example:
+          cn=admin,dc=example,dc=com
       bareos_fd_plugin_ldap_password:
         type: "str"
         default: ""

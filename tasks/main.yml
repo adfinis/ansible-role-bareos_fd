@@ -96,6 +96,7 @@
     - bareos_fd_plugins is iterable
     - '"ldap" in bareos_fd_plugins'
     - bareos_fd_plugin_ldap_uri is defined
+    - bareos_fd_plugin_ldap_base_dn is defined
     - bareos_fd_plugin_ldap_bind_dn is defined
     - bareos_fd_plugin_ldap_password is defined
 
