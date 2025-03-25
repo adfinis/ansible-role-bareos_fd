@@ -11,11 +11,11 @@ argument_specs:
     options:
       bareos_fd_backup_configurations:
         type: "bool"
-        default: no
+        default: false
         description: "Backup existing configurations."
       bareos_fd_install_debug_packages:
         type: "bool"
-        default: no
+        default: false
         description: "Install debug packages. This requires the debug repositories to be enabled."
       bareos_fd_hostname:
         type: "str"
@@ -35,11 +35,11 @@ argument_specs:
         description: "The maximum number of concurrent jobs."
       bareos_fd_tls_enable:
         type: "bool"
-        default: yes
+        default: true
         description: "Enable TLS."
       bareos_fd_tls_verify_peer:
         type: "bool"
-        default: no
+        default: false
         description: "Verify the peer."
       bareos_fd_heartbeat_interval:
         type: "int"
@@ -55,7 +55,7 @@ argument_specs:
         description: "The Messages to configure."
       bareos_fd_encryption_enabled:
         type: "bool"
-        default: no
+        default: false
         description: "For encryption of data, set this to `yes`."
       bareos_fd_encryption_private_key:
         type: "str"
@@ -71,3 +71,25 @@ argument_specs:
         elements: "str"
         required: false
         version_added: v1.1.0
+      bareos_fd_plugin_ldap_uri:
+        type: "str"
+        default: ""
+        description: >-
+          LDAP URI. Example:
+          ldap://localhost
+      bareos_fd_plugin_ldap_base_dn:
+        type: "str"
+        default: ""
+        description: >-
+          LDAP base DN. Example:
+          dc=example,dc=com
+      bareos_fd_plugin_ldap_bind_dn:
+        type: "str"
+        default: ""
+        description: >-
+          LDAP bind DN to use for LDAP authentication. Example:
+          cn=admin,dc=example,dc=com
+      bareos_fd_plugin_ldap_password:
+        type: "str"
+        default: ""
+        description: "LDAP password for the provided bind DN"

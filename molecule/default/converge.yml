@@ -77,6 +77,8 @@
         - mariabackup
         - mysql
         - mysql_xtrabackup
-        # TODO disabled as package `bareos-filedaemon-ldap-python-plugin`
-        # has broken dependencies on Debian (python-ldap instead of python3-ldap)
-        #  - ldap
+        - ldap
+      bareos_fd_plugin_ldap_uri: ldap://localhost
+      bareos_fd_plugin_ldap_base_dn: dc=example,dc=com
+      bareos_fd_plugin_ldap_bind_dn: cn=admin,dc=example,dc=com
+      bareos_fd_plugin_ldap_password: MySecretLDAP_Password
