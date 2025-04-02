@@ -8,7 +8,7 @@
     - role: ansible-role-bareos_fd
       bareos_fd_backup_configurations: true
       bareos_fd_install_debug_packages: false
-      bareos_fd_encryption_enabled: true
+      bareos_fd_encryption_enable: true
       bareos_fd_encryption_private_key: |
         -----BEGIN PRIVATE KEY-----
         MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBALnT/+JXRTeg0fgk
@@ -50,8 +50,6 @@
           connection_from_director_to_client: false
           tls_enable: true
           tls_verify_peer: false
-        - name: "disabled-director"
-          enabled: false
       bareos_fd_messages:
         - name: "Standard"
           director:
@@ -82,3 +80,5 @@
       bareos_fd_plugin_ldap_base_dn: dc=example,dc=com
       bareos_fd_plugin_ldap_bind_dn: cn=admin,dc=example,dc=com
       bareos_fd_plugin_ldap_password: MySecretLDAP_Password
+      # ReaR
+      bareos_fd_rear_enable: true

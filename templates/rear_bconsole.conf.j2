@@ -1,0 +1,16 @@
+{{ ansible_managed | comment }}
+# bconsole required by Relax-and-Recover (ReaR)
+
+{% if item.enabled is defined and item.enabled or item.enabled is not defined %}
+Director {
+   Name = "{{ item.name }}"
+   Address = "{{ item.address | default(item.name) }}"
+}
+
+Console {
+   Name = "{{ bareos_fd_rear_console_name }}"
+   Password = "{{ bareos_fd_rear_console_pass }}"
+}
+{% else %}
+# This file is not enabled.
+{% endif %}

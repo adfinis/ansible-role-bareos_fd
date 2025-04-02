@@ -53,7 +53,7 @@ argument_specs:
         type: "list"
         default: []
         description: "The Messages to configure."
-      bareos_fd_encryption_enabled:
+      bareos_fd_encryption_enable:
         type: "bool"
         default: false
         description: "For encryption of data, set this to `yes`."
@@ -93,3 +93,58 @@ argument_specs:
         type: "str"
         default: ""
         description: "LDAP password for the provided bind DN"
+
+      # ReaR (Relax-and-Recover)
+      bareos_fd_rear_enable:
+        type: "bool"
+        default: false
+        description: >-
+          When enabled this will install ReaR on the client and setup the configuration
+          to create bootable images, which can be used for disaster-recovery.
+          See: https://docs.bareos.org/Appendix/DisasterRecoveryUsingBareos.html#linux
+
+          This option requires some extra settings on the Bareos Director side too.
+          Namely you need a dedicated Bareos Console, which can be used by ReaR to trigger the restore,
+          and you need to know the Bareos Client, FileSet and restore Job resource.
+      bareos_fd_rear_client:
+        type: "str"
+        default: "{{ inventory_hostname }}"
+        description: >-
+          Name of the client resource as defined on the Bareos Director. Default is the Ansible inventory_hostname
+      bareos_fd_rear_fileset:
+        type: "str"
+        default: "LinuxAll"
+        description: "Which Bareos FileSet to use for the disaster recovery"
+      bareos_fd_rear_restore_job:
+        type: "str"
+        default: "RestoreFiles"
+        description: "Which Bareos Job to use to run the disaster recovery restore"
+      bareos_fd_rear_output:
+        type: "str"
+        description: >-
+          Format of the bootable rescue image. Only ISO is tested.
+        choices:
+          - "ISO"
+          - "USB"
+          - "RAWDISK"
+          - "PXE"
+          - "OBDR"
+          - "PORTABLE"
+      bareos_fd_rear_output_url:
+        type: "str"
+        description: >-
+          It is recommended to store the rescue images on a remote location (For example NFS share),
+          as you would have to run the restore on another machine first to get the restore image to boot from.
+      bareos_fd_rear_console_name:
+        type: "str"
+        default: "rear-{{ inventory_hostname_short }}-console"
+        description: >-
+          Bareos Console resource used by ReaR to trigger the restore job. Resource has to exist on Bareos Director.
+          Bareos recommends that a dedicated named Console for each backup client is used.
+          See: https://docs.bareos.org/Appendix/DisasterRecoveryUsingBareos.html#configure-a-named-console-for-rear
+      bareos_fd_rear_console_pass:
+        type: "str"
+        default: "{{ lookup('ansible.builtin.password', '/dev/null', seed=inventory_hostname, length=20, chars='ascii_letters') }}"
+        description: >-
+          Password for the Bareos Console resource. Will be auto-generated, if not provided.
+          The secret has to match to the Console resource on the Bareos Director.
