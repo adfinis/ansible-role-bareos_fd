@@ -21,7 +21,7 @@ This example is taken from [`molecule/default/converge.yml`](https://github.com/
     - role: adfinis.bareos_fd
       bareos_fd_backup_configurations: yes
       bareos_fd_install_debug_packages: yes
-      bareos_fd_encryption_enabled: yes
+      bareos_fd_encryption_enable: yes
       bareos_fd_encryption_private_key: |
         -----BEGIN RSA PRIVATE KEY-----
         MIIJKAIBAAKCAgEAvFS5DDxBm2Hgf6LM2QnU3eKTw6PHpCBESjuqoKDnwnjL9wXH
@@ -210,7 +210,7 @@ bareos_fd_messages:
     description: "Send relevant messages to the Director."
 
 # For encryption of data, set this to `yes`.
-bareos_fd_encryption_enabled: no
+bareos_fd_encryption_enable: no
 
 # You may bring your own private key. If not specified, a new one will be generated.
 bareos_fd_encryption_private_key: ""
