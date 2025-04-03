@@ -3,6 +3,9 @@
 bareos_fd_debug_packages:
   - gdb
 
+bareos_fd_encryption_packages:
+  - python3-cryptography
+
 bareos_fd_plugin_dir: "/usr/lib64/bareos/plugins"
 bareos_fd_plugin_name: python3
 bareos_fd_plugin_list:

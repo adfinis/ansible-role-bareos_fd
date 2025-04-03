@@ -35,14 +35,6 @@ bareos_fd_plugin_list:
 bareos_fd_plugin_psql_root_dir: >-
   /etc/postgresql/{{ bareos_fd_plugin_psql_version }}/main
 
-# The location of the postgresql.conf file
-bareos_fd_plugin_psql_config: >-
-  {{ bareos_fd_plugin_psql_root_dir }}/postgresql.conf
-
-# The location of the pg_hba.conf file
-bareos_fd_plugin_psql_config_hba: >-
-  {{ bareos_fd_plugin_psql_root_dir }}/pg_hba.conf
-
 # Where to store the WAL archive data
 bareos_fd_plugin_psql_wal_archive: >-
   /var/lib/postgresql/{{ bareos_fd_plugin_psql_version }}/wal_archive

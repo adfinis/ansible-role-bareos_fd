@@ -7,3 +7,22 @@ bareos_fd_encryption_packages:
 bareos_fd_service: bareos-filedaemon
 bareos_fd_plugin_name: python3
 bareos_fd_plugin_dir: "/usr/lib64/bareos/plugins"
+
+##
+# Bareos PostgreSQL backup plugin
+##
+
+bareos_fd_plugin_psql_root_dir: >-
+  /var/lib/pgsql/data
+
+# The location of the postgresql.conf file
+bareos_fd_plugin_psql_config: >-
+  {{ bareos_fd_plugin_psql_root_dir }}/postgresql.conf
+
+# The location of the pg_hba.conf file
+bareos_fd_plugin_psql_config_hba: >-
+  {{ bareos_fd_plugin_psql_root_dir }}/pg_hba.conf
+
+# Where to store the WAL archive data
+bareos_fd_plugin_psql_wal_archive: >-
+ /var/lib/pgsql/wal_archive
