@@ -53,13 +53,24 @@ bareos_fd_messages:
     description: "Send relevant messages to the Director."
 
 # For encryption of data, set this to `true`.
-bareos_fd_encryption_enabled: false
+bareos_fd_encryption_enable: false
 
 # You may bring your own private key. If not specified, a new one will be generated.
 bareos_fd_encryption_private_key: ""
 
 # The master public key to use.
 bareos_fd_encryption_master_public_key: ""
+
+##
+# Setup Relax-and-Recover (ReaR) on client
+# #
+
+bareos_fd_rear_enable: false
+bareos_fd_rear_client: "{{ inventory_hostname }}"
+bareos_fd_rear_fileset: LinuxAll
+bareos_fd_rear_restore_job: RestoreFiles
+bareos_fd_rear_console_name: "rear-{{ inventory_hostname_short }}-console"
+bareos_fd_rear_console_pass: "{{ lookup('ansible.builtin.password', '/dev/null', seed=inventory_hostname, length=20, chars='ascii_letters') }}"
 
 ##
 # Defaults used by the Bareos PostgreSQL backup plugin

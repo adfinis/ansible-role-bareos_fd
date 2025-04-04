@@ -1,0 +1,13 @@
+{{ ansible_managed | comment }}
+BACKUP=BAREOS
+BAREOS_CLIENT={{ bareos_fd_rear_client }}
+BAREOS_FILESET={{ bareos_fd_rear_fileset }}
+BAREOS_RESTORE_JOB={{ bareos_fd_rear_restore_job }}
+{% if bareos_fd_rear_output is defined %}
+OUTPUT={{ bareos_fd_rear_output }}
+{% endif %}
+{% if bareos_fd_rear_output_url is defined %}
+OUTPUT_URL={{ bareos_fd_rear_output_url }}
+{% else %}
+# iso image will be written to: /var/lib/rear/output/
+{% endif %}

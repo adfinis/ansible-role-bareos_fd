@@ -9,7 +9,7 @@
     - role: ansible-role-bareos_fd
       bareos_fd_backup_configurations: true
       bareos_fd_install_debug_packages: false
-      bareos_fd_encryption_enabled: true
+      bareos_fd_encryption_enable: true
       bareos_fd_encryption_private_key: |
         -----BEGIN PRIVATE KEY-----
         MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBALnT/+JXRTeg0fgk
