@@ -1,21 +1,22 @@
 ---
 
-bareos_fd_service: bareos-fd
-
 bareos_fd_debug_packages:
-  - bareos-filedaemon-debuginfo
   - gdb
 
+# SUSE <= 15 require the python3 module to get a supported python version
+bareos_fd_encryption_packages:
+  - python311-cryptography
+
+bareos_fd_plugin_dir: "/usr/lib64/bareos/plugins"
+bareos_fd_plugin_name: python3
 bareos_fd_plugin_list:
   - name: mariabackup
     packages:
       - bareos-filedaemon-mariabackup-python-plugin
 
-  # TODO RHEL offers no python-mysqlclient package per default.
-  # Check if PyMySQL is working with the plugin
   - name: mysql
     packages:
-      - python3-PyMySQL
+      - python3-mysqlclient
 
   - name: postgresql
     packages:
