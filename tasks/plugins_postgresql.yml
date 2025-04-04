@@ -27,6 +27,15 @@
   ansible.builtin.package:
     name: python3-psycopg2
     state: present
+  when:
+    - ansible_facts.os_family != "Suse"
+
+- name: plugins_postgresql | Install psycopg for community.postgresql (Suse)
+  ansible.builtin.package:
+    name: python311-psycopg2  # python3 module is required on SUSE <=15
+    state: present
+  when:
+    - ansible_facts.os_family == "Suse"
 
 - name: plugins_postgresql | Make sure psql root user is present
   community.postgresql.postgresql_user:
