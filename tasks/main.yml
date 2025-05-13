@@ -37,6 +37,18 @@
     - Check configuration
     - Restart bareos-filedaemon
 
+- name: Replace bareos-filedaemon.service file with nice settings
+  ansible.builtin.template:
+    src: bareos-filedaemon.service.j2
+    dest: "/etc/systemd/system/bareos-filedaemon.service"
+    owner: root
+    group: root
+    mode: "0751"
+    backup: "{{ bareos_fd_backup_configurations }}"
+  notify:
+    - Check configuration
+    - Restart bareos-filedaemon
+
 - name: Place director
   ansible.builtin.template:
     src: director.conf.j2
