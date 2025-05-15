@@ -37,13 +37,21 @@
     - Check configuration
     - Restart bareos-filedaemon
 
-- name: Replace bareos-filedaemon.service file with nice settings
-  ansible.builtin.template:
-    src: bareos-filedaemon.service.j2
-    dest: "/etc/systemd/system/bareos-filedaemon.service"
+- name: Ensure bareos-fd.service.d folder exists
+  ansible.builtin.file:
+    path: "/etc/systemd/system/bareos-fd.service.d"
+    state: directory
     owner: root
     group: root
-    mode: "0751"
+    mode: "0740"
+
+- name: Override/set bareos-filedaemon.service nice settings
+  ansible.builtin.template:
+    src: nice_override.conf.j2
+    dest: "/etc/systemd/system/bareos-fd.service.d/nice_override.conf"
+    owner: root
+    group: root
+    mode: "0644"
     backup: "{{ bareos_fd_backup_configurations }}"
   notify:
     - Check configuration

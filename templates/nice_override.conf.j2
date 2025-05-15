@@ -1,0 +1,7 @@
+{{ ansible_managed | comment }}
+
+# Set nice values for bareos-fd.service
+[Service]
+Nice=10
+IOSchedulingClass=best-effort
+IOSchedulingPriority=7
