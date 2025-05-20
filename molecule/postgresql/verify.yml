@@ -55,7 +55,7 @@
 
     - name: Test postgresql peer auth for root
       community.postgresql.postgresql_info:
-        db: postgres
+        login_db: postgres
         login_user: root
         filter: version
       register: _psql_result
