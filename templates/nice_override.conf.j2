@@ -2,6 +2,6 @@
 
 # Set nice values for bareos-fd.service
 [Service]
-Nice=10
-IOSchedulingClass=best-effort
-IOSchedulingPriority=7
+Nice={{ bareos_fd_io_nice_value }}
+IOSchedulingClass={{ bareos_fd_io_scheduling_class }}
+IOSchedulingPriority={{ bareos_fd_io_scheduling_priority }}

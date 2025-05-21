@@ -10,6 +10,12 @@
     name: "{{ bareos_fd_service }}"
     state: restarted
 
+- name: Restart bareos-filedaemon and daemon-reload
+  ansible.builtin.service:
+    name: "{{ bareos_fd_service }}"
+    state: restarted
+    daemon_reload: true
+
 # required for the PostgreSQL backup plugin
 # only used when PostgreSQL is installed on the FD
 - name: Reload postgresql

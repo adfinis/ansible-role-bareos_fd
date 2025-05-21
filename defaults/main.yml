@@ -61,6 +61,18 @@ bareos_fd_encryption_private_key: ""
 # The master public key to use.
 bareos_fd_encryption_master_public_key: ""
 
+# Enable bareos-fd nice settings
+bareos_fd_io_nice_enable: false
+
+# Niceness value between -20 (highest priority) to 20 (least priority)
+bareos_fd_io_nice_value: 10
+
+# I/O scheduling class: realtime, best-effort or idle
+bareos_fd_io_scheduling_class: best-effort
+
+# I/O scheduling priority between 0 (highest priority) and 7 (lowest priority)
+bareos_fd_io_scheduling_priority: 7
+
 ##
 # Setup Relax-and-Recover (ReaR) on client
 # #
