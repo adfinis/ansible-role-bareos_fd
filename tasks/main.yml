@@ -52,7 +52,7 @@
   - name: Place nice_override.conf file
     ansible.builtin.template:
       src: nice_override.conf.j2
-      dest: "/etc/systemd/system/bareos-fd.service.d/nice_override.conf"
+      dest: "/etc/systemd/system/{{ bareos_fd_service }}.service.d/nice_override.conf"
       owner: root
       group: root
       mode: "0644"
