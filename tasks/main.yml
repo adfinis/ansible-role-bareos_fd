@@ -41,24 +41,24 @@
   when:
     - bareos_fd_io_nice_enable
   block:
-  - name: Ensure bareos-fd.service.d folder exists
-    ansible.builtin.file:
-      path: "/etc/systemd/system/bareos-fd.service.d"
-      state: directory
-      owner: root
-      group: root
-      mode: "0740"
+    - name: Ensure bareos-fd.service.d folder exists
+      ansible.builtin.file:
+        path: "/etc/systemd/system/bareos-fd.service.d"
+        state: directory
+        owner: root
+        group: root
+        mode: "0740"
 
-  - name: Place nice_override.conf file
-    ansible.builtin.template:
-      src: nice_override.conf.j2
-      dest: "/etc/systemd/system/{{ bareos_fd_service }}.service.d/nice_override.conf"
-      owner: root
-      group: root
-      mode: "0644"
-      backup: "{{ bareos_fd_backup_configurations }}"
-    notify:
-      - Restart bareos-filedaemon and daemon-reload
+    - name: Place nice_override.conf file
+      ansible.builtin.template:
+        src: nice_override.conf.j2
+        dest: "/etc/systemd/system/{{ bareos_fd_service }}.service.d/nice_override.conf"
+        owner: root
+        group: root
+        mode: "0644"
+        backup: "{{ bareos_fd_backup_configurations }}"
+      notify:
+        - Restart bareos-filedaemon and daemon-reload
 
 - name: Place director
   ansible.builtin.template:
