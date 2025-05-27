@@ -43,7 +43,7 @@
   block:
     - name: Ensure bareos-fd.service.d folder exists
       ansible.builtin.file:
-        path: "/etc/systemd/system/bareos-fd.service.d"
+        path: "/etc/systemd/system/{{ bareos_fd_service }}.service.d"
         state: directory
         owner: root
         group: root
