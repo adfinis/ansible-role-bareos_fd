@@ -148,3 +148,23 @@ argument_specs:
         description: >-
           Password for the Bareos Console resource. Will be auto-generated, if not provided.
           The secret has to match to the Console resource on the Bareos Director.
+      bareos_fd_io_nice_enable:
+        type: "bool"
+        default: false
+        description: "Enable nice value override for bareos-filedaemon.service"
+      bareos_fd_io_nice_value:
+        type: "int"
+        default: 10
+        description: "Set the override nice value -20 (highest priority) to 20 (least priority)"
+      bareos_fd_io_scheduling_class:
+        type: "str"
+        default: "best-effort"
+        description: "Set I/O scheduling class"
+        choices:
+          - "realtime"
+          - "best-effort"
+          - "idle"
+      bareos_fd_io_scheduling_priority:
+        type: "int"
+        default: 7
+        description: "Set I/O scheduling priority 0 (highest priority) and 7 (lowest priority)"

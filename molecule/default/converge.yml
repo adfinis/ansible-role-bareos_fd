@@ -82,3 +82,6 @@
       bareos_fd_plugin_ldap_password: MySecretLDAP_Password
       # ReaR
       bareos_fd_rear_enable: true
+      # bareos-filedaemon.service nice
+      bareos_fd_io_nice_enable: true
+
