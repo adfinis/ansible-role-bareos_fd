@@ -82,3 +82,9 @@
       bareos_fd_plugin_ldap_password: MySecretLDAP_Password
       # ReaR
       bareos_fd_rear_enable: true
+      # bareos-filedaemon.service nice
+      bareos_fd_io_nice_enable: false
+      bareos_fd_io_nice_value: 10
+      bareos_fd_io_scheduling_class: best-effort
+      bareos_fd_io_scheduling_priority: 7
+
