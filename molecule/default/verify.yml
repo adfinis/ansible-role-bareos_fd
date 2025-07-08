@@ -31,3 +31,15 @@
       failed_when: _result.changed
       when:
         - ansible_facts.os_family != "Archlinux"  # not supported for FD Plugins
+
+    - name: plugins_mariadb | Get /root/.my.cnf stats
+      ansible.builtin.stat:
+        path: /root/.my.cnf
+      register: _my_cnf
+
+    - name: plugins_mariadb | Verify /root/.my.cnf exists
+      ansible.builtin.assert:
+        that:
+          - _my_cnf.stat.exists
+          - _my_cnf.stat.pw_name == "root"  # owner
+          - _my_cnf.stat.gr_name == "root"

@@ -1,0 +1,18 @@
+---
+# /root/.my.cnf file is required for the plugin to work.
+# the file can also be empty so when no file is present
+# we create an empty file instead.
+
+- name: plugins_mariadb | Check if /root/.my.cnf exists
+  ansible.builtin.stat:
+    path: /root/.my.cnf
+  register: _my_cnf
+
+- name: plugins_mariadb | Touch /root/.my.cnf when missing
+  ansible.builtin.file:
+    path: /root/.my.cnf
+    state: touch
+    owner: root
+    group: root
+    mode: "0600"
+  when: not _my_cnf.stat.exists
