@@ -103,6 +103,14 @@
     - bareos_fd_plugins is defined
     - bareos_fd_plugins is iterable
 
+- name: Import mariadb plugin tasks
+  ansible.builtin.import_tasks:
+    file: plugins_mariadb.yml
+  when:
+    - bareos_fd_plugins is defined
+    - bareos_fd_plugins is iterable
+    - '"mariabackup" in bareos_fd_plugins'
+
 - name: Import postgresql plugin tasks
   ansible.builtin.import_tasks:
     file: plugins_postgresql.yml
