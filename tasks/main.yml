@@ -40,13 +40,11 @@
 - name: Place .nobackup files for excludes
   ansible.builtin.template:
     src: nobackup.j2
-    dest: "{{ _nobackup_path }}/{{ bareos_fd_nobackup_filename }}"
+    dest: "{{ item }}/{{ bareos_fd_nobackup_filename }}"
     owner: bareos
     group: bareos
     mode: "0644"
   loop: "{{ bareos_fd_nobackup_excludes }}"
-  loop_control:
-    label: _nobackup_path
   when:
     - bareos_fd_nobackup_excludes | length > 0
 
