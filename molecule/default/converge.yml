@@ -84,4 +84,8 @@
       bareos_fd_rear_enable: true
       # bareos-filedaemon.service nice
       bareos_fd_io_nice_enable: true
-
+      bareos_fd_nobackup_filename: .nomoleculebackup
+      bareos_fd_nobackup_excludes:
+        - /home
+        - /root
+        - /var/lib

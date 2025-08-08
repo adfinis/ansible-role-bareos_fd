@@ -43,3 +43,17 @@
           - _my_cnf.stat.exists
           - _my_cnf.stat.pw_name == "root"  # owner
           - _my_cnf.stat.gr_name == "root"
+
+    - name: Get nobackup file stats
+      ansible.builtin.stat:
+        path: "{{ item }}"
+      loop: "{{ bareos_fd_nobackup_excludes }}/{{ bareos_fd_nobackup_filename }}"
+      register: _nobackup_files
+
+    - name: Verify nobackup files exist
+      ansible.builtin.assert:
+        that:
+          - item.stat.exists
+          - item.stat.pw_name == "bareos"
+          - item.stat.gr_name == "bareos"
+      loop: "{{ _nobackup_files }}"

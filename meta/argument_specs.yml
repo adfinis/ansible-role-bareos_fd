@@ -93,6 +93,18 @@ argument_specs:
         type: "str"
         default: ""
         description: "LDAP password for the provided bind DN"
+      bareos_fd_nobackup_excludes:
+        type: "list"
+        description: >-
+          List of paths that should be ignored from the backup.
+          The role will place a .nobackup file in each directory on this list.
+          The FileSets on the Director need the option "Exclude Dir Containing"
+      bareos_fd_nobackup_filename:
+        type: "str"
+        default: ".nobackup"
+        description: >-
+          Filename which is used by the Bareos FileSets in the option "Exclude Dir Containing".
+          Bareos recommends ".nobackup" which is the default option.
 
       # ReaR (Relax-and-Recover)
       bareos_fd_rear_enable:

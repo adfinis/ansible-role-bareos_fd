@@ -73,6 +73,10 @@ bareos_fd_io_scheduling_class: best-effort
 # I/O scheduling priority between 0 (highest priority) and 7 (lowest priority)
 bareos_fd_io_scheduling_priority: 7
 
+# Backup excludes on the client, which will be placed as files for all paths in bareos_fd_nobackup_excludes
+bareos_fd_nobackup_filename: .nobackup  # recommendation according to bareos
+bareos_fd_nobackup_excludes: []
+
 ##
 # Setup Relax-and-Recover (ReaR) on client
 # #
