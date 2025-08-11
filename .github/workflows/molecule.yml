@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: ansible-lint
         uses: ansible/ansible-lint@main
 
@@ -76,7 +76,7 @@ jobs:
           - image: "rockylinux9"
     steps:
       - name: checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           path: "${{ github.repository }}"
 
