@@ -112,7 +112,7 @@
   block:
     - name: plugins_postgresql | Deploy WAL cleanup script
       ansible.builtin.template:
-        src: "template/bareos-psql-wal-cleanup-script.sh.j2"
+        src: "templates/bareos-psql-wal-cleanup-script.sh.j2"
         dest: "/usr/local/sbin/bareos-psql-wal-cleanup.sh"
         owner: root
         group: root
@@ -122,7 +122,7 @@
 
     - name: plugins_postgresql | Create WAL cleanup service and timer
       ansible.builtin.template:
-        src: "template/bareos-psql-wal-cleanup.{{ item }}.j2"
+        src: "templates/bareos-psql-wal-cleanup.{{ item }}.j2"
         dest: "/etc/systemd/system/bareos-psql-wal-cleanup.{{ item }}"
         owner: root
         group: root
