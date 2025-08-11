@@ -1,0 +1,13 @@
+{{ ansible_managed | comment }}
+[Unit]
+Description=Bareos PostgreSQL plugin service that cleanes up the obsolete WAL archive files in {{ bareos_fd_plugin_psql_wal_archive }}
+Wants=postgresql.service
+
+[Service]
+Type=oneshot
+User=postgres
+Group=postgres
+ExecStart=/usr/local/sbin/bareos-psql-wal-cleanup.sh
+
+[Install]
+WantedBy=multi-user.target

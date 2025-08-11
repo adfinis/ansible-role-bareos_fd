@@ -93,6 +93,29 @@ argument_specs:
         type: "str"
         default: ""
         description: "LDAP password for the provided bind DN"
+      bareos_fd_plugin_psql_wal_cleanup_enable:
+        type: "bool"
+        default: false
+        description: >-
+          Bareos does not cleanup the PostgreSQL WAL archive files on its own, which can lead
+          to a growing disk usage. Enabling this will deploy a clean-up script,
+          which is called by a systemd timer and cleanes up old files.
+          This option is disabled per default to avoid accidential file removal.
+      bareos_fd_plugin_psql_wal_cleanup_max_age:
+        type: "str"
+        default: "14"
+        description: >-
+          PostgreSQL WAL archive files older than this value (days) are removed by the cleanup script.
+          This value is only used when 'bareos_fd_plugin_psql_wal_cleanup_enable' is enabled.
+      bareos_fd_plugin_psql_wal_cleanup_schedule:
+        type: "str"
+        default: "*-*-* 14:00:00"
+        description: >-
+          The time when the cleanup script should run. Per default it will run daily at 14:00,
+          to avoid potential overlap with the backup process which runs during the night
+          in most cases.
+          This value is only used when 'bareos_fd_plugin_psql_wal_cleanup_enable' is enabled.
+
       bareos_fd_nobackup_excludes:
         type: "list"
         description: >-

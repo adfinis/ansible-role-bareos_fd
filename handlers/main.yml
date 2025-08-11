@@ -30,3 +30,9 @@
       which requires a service restart. We don't do this in this role,
       to avoid unexpected downtimes. Please make sure to restart
       the PostgreSQL service or else the backups will not work!
+
+- name: Restart WAL archive timer
+  ansible.builtin.service:
+    name: bareos-psql-wal-cleanup.timer
+    state: restarted
+    daemon_reload: true

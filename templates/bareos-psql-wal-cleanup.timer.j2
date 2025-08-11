@@ -1,0 +1,11 @@
+{{ ansible_managed | comment }}
+[Unit]
+Description=Bareos PostgreSQL plugin timer that cleanes up the obsolete WAL archive files in {{ bareos_fd_plugin_psql_wal_archive }}
+
+[Timer]
+OnCalendar={{ bareos_fd_plugin_psql_wal_cleanup_schedule }}
+Persistent=true
+Unit=bareos-psql-wal-cleanup.service
+
+[Install]
+WantedBy=timers.target
