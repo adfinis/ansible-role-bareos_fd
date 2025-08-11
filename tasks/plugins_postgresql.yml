@@ -108,7 +108,7 @@
 
 - name: plugins_postgresql | WAL archive cleanup
   when:
-    - bareos_fd_plugin_wal_cleanup_enable
+    - bareos_fd_plugin_psql_wal_cleanup_enable
   block:
     - name: plugins_postgresql | Deploy WAL cleanup script
       ansible.builtin.template:
