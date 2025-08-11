@@ -27,6 +27,9 @@ platforms:
 
 provisioner:
   name: ansible
+  config_options:
+    defaults:
+      roles_path: "{{ molecule_ephemeral_directory }}/roles:../../../"
 
 verifier:
   name: ansible

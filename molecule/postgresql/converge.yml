@@ -76,3 +76,4 @@
           enabled: false
       bareos_fd_plugins:
         - postgresql
+      bareos_fd_plugin_psql_wal_cleanup_enable: true

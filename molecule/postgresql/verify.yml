@@ -30,6 +30,8 @@
       ansible.builtin.assert:
         that:
           - ansible_facts.services[bareos_fd_service+".service"].state == "running"
+          # just makes sure that the custom service is present
+          - ansible_facts.services["bareos-psql-wal-cleanup.service"].state != "failed"
 
     - name: Check if port 9102 is listening
       ansible.builtin.wait_for:
