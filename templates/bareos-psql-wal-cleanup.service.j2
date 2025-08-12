@@ -7,7 +7,7 @@ Wants=postgresql.service
 Type=oneshot
 User=postgres
 Group=postgres
-ExecStart=/usr/local/sbin/bareos-psql-wal-cleanup.sh
+ExecStart=/usr/local/bin/bareos-psql-wal-cleanup.sh
 
 [Install]
 WantedBy=multi-user.target

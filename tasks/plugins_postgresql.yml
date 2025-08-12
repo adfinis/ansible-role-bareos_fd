@@ -113,10 +113,10 @@
     - name: plugins_postgresql | Deploy WAL cleanup script
       ansible.builtin.template:
         src: "templates/bareos-psql-wal-cleanup-script.sh.j2"
-        dest: "/usr/local/sbin/bareos-psql-wal-cleanup.sh"
+        dest: "/usr/local/bin/bareos-psql-wal-cleanup.sh"
         owner: root
         group: root
-        mode: "0750"
+        mode: "0751"
       notify:
         - Restart WAL archive timer
 
