@@ -26,10 +26,15 @@
     - name: Populate service facts
       ansible.builtin.service_facts:
 
-    - name: Check if service is running
+    - name: Check if services are running
       ansible.builtin.assert:
         that:
           - ansible_facts.services[bareos_fd_service+".service"].state == "running"
+
+          # service is not actively running but disabled as it's called by a timer instead.
+          # no facts available about timers
+          - ansible_facts.services["bareos-psql-wal-cleanup.service"].state != "failed"
+          - ansible_facts.services["bareos-psql-wal-cleanup.service"].status == "disabled"
 
     - name: Check if port 9102 is listening
       ansible.builtin.wait_for:

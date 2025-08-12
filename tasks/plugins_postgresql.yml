@@ -105,3 +105,39 @@
     owner: root
     group: root
     mode: "0644"
+
+- name: plugins_postgresql | WAL archive cleanup
+  when:
+    - bareos_fd_plugin_psql_wal_cleanup_enable
+  block:
+    - name: plugins_postgresql | Deploy WAL cleanup script
+      ansible.builtin.template:
+        src: "templates/bareos-psql-wal-cleanup-script.sh.j2"
+        dest: "/usr/local/bin/bareos-psql-wal-cleanup.sh"
+        owner: root
+        group: root
+        mode: "0751"
+      notify:
+        - Restart WAL archive timer
+
+    - name: plugins_postgresql | Create WAL cleanup service and timer
+      ansible.builtin.template:
+        src: "templates/bareos-psql-wal-cleanup.{{ item }}.j2"
+        dest: "/etc/systemd/system/bareos-psql-wal-cleanup.{{ item }}"
+        owner: root
+        group: root
+        mode: "0644"
+      loop:
+        - timer
+        - service
+      notify:
+        - Restart WAL archive timer
+
+    - name: plugins_postgresql | Flush handlers
+      ansible.builtin.meta: flush_handlers
+
+    - name: plugins_postgresql | Enable and start WAL cleanup timer
+      ansible.builtin.service:
+        name: bareos-psql-wal-cleanup.timer
+        state: started
+        enabled: true

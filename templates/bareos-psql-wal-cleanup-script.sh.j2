@@ -1,0 +1,29 @@
+#!/bin/bash
+{{ ansible_managed | comment }}
+# Deletes PostgreSQL WAL files from an archive directory older than a set number of days.
+# WARNING: This method is not tied to your backup status and can render backups useless.
+
+set -euo pipefail
+
+PG_WAL_ARCHIVE={{ bareos_fd_plugin_psql_wal_archive }}
+RETENTION={{ bareos_fd_plugin_psql_wal_cleanup_max_age }}
+
+if [ ! -d "${PG_WAL_ARCHIVE}" ]; then
+  echo "Error: WAL archive directory not found at ${PG_WAL_ARCHIVE}"
+  exit 1
+fi
+
+echo "Starting time-based WAL cleanup in: ${PG_WAL_ARCHIVE}"
+echo "Retention Period: Deleting files older than ${RETENTION_DAYS} days."
+
+# find and delete old WAL files.
+# The -name pattern matches standard 24-character hexadecimal WAL filenames.
+# This avoids deleting other files like '.backup' or '.history'.
+find "${PG_WAL_ARCHIVE}" \
+  -type f \
+  -name '????????????????????????' \
+  -mtime "+${RETENTION_DAYS}" \
+  -print \
+  -delete
+
+echo "Time-based WAL cleanup complete."
