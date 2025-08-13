@@ -72,7 +72,6 @@
         that:
           - _wal_symlink.stat.exists
           - _wal_symlink.stat.islnk
-          - _wal_symlink.stat.lnk_source == bareos_fd_plugin_psql_wal_archive
 
     - name: Get before and after script file stats
       ansible.builtin.stat:

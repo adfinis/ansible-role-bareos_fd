@@ -74,6 +74,7 @@
     group: postgres
     mode: "0751"
     state: link
+    follow: false
 
 - name: plugins_postgresql | Make sure postgresql conf.d dir is present
   ansible.builtin.file:
