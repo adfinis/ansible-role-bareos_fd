@@ -62,6 +62,18 @@
       failed_when:
         - '"postgresql" not in _psql_result.version.raw | lower'
 
+    - name: Get WAL archive symlink stats
+      ansible.builtin.stat:
+        path: "{{ bareos_fd_plugin_psql_wal_archive_symlink }}"
+      register: _wal_symlink
+
+    - name: Test WAL archive symlink
+      ansible.builtin.assert:
+        that:
+          - _wal_symlink.stat.exists
+          - _wal_symlink.stat.islnk
+          - _wal_symlink.stat.lnk_source == bareos_fd_plugin_psql_wal_archive
+
     - name: Get before and after script file stats
       ansible.builtin.stat:
         path: "/usr/local/bin/bareos-psql-{{ item }}.sh"
