@@ -98,23 +98,16 @@ argument_specs:
         default: false
         description: >-
           Bareos does not cleanup the PostgreSQL WAL archive files on its own, which can lead
-          to a growing disk usage. Enabling this will deploy a clean-up script,
-          which is called by a systemd timer and cleanes up old files.
+          to a growing disk usage. Enabling this will deploy a before and after script,
+          which can be called by the PostgreSQL bakcup job on the Director:
+          https://docs.bareos.org/Configuration/Director.html#config-Dir_Job_ClientRunAfterJob
+          https://docs.bareos.org/Configuration/Director.html#config-Dir_Job_ClientRunBeforeJob
+
+          The scripts will be deployed to the following locations:
+          /usr/local/bin/bareos-psql-before-script.sh
+          /usr/local/bin/bareos-psql-after-script.sh
+
           This option is disabled per default to avoid accidential file removal.
-      bareos_fd_plugin_psql_wal_cleanup_max_age:
-        type: "str"
-        default: "14"
-        description: >-
-          PostgreSQL WAL archive files older than this value (days) are removed by the cleanup script.
-          This value is only used when 'bareos_fd_plugin_psql_wal_cleanup_enable' is enabled.
-      bareos_fd_plugin_psql_wal_cleanup_schedule:
-        type: "str"
-        default: "*-*-* 14:00:00"
-        description: >-
-          The time when the cleanup script should run. Per default it will run daily at 14:00,
-          to avoid potential overlap with the backup process which runs during the night
-          in most cases.
-          This value is only used when 'bareos_fd_plugin_psql_wal_cleanup_enable' is enabled.
 
       bareos_fd_nobackup_excludes:
         type: "list"
