@@ -1,0 +1,28 @@
+#!/bin/bash
+{{ ansible_managed | comment }}
+# "marks" the file in the PostgreSQL WAL archive directory, so Bareos knows which files are safe to delete,
+# without breaking the incremental backups.
+
+set -euo pipefail
+
+PG_WAL_ARCHIVE={{ bareos_fd_plugin_psql_wal_archive }}
+MARKER_FILE="/var/lib/postgresql/wal_cleanup_marker.txt"
+
+echo "Running pre-backup script for PostgreSQL."
+
+# Find the newest WAL file currently in the archive.
+# ls -1 lists one file per line, sort -r reverses the order, head -n 1 gets the top one.
+LATEST_WAL=$(ls -1 "${PG_WAL_ARCHIVE}"/???????????????????????? 2>/dev/null | sort -r | head -n 1)
+
+if [ -z "$LATEST_WAL" ]; then
+  echo "WAL archive is empty or contains no standard WAL files. Nothing to mark."
+  # Ensure no old marker file is left behind.
+  rm -f "$MARKER_FILE"
+  exit 0
+fi
+
+# Write the basename of the file (just the filename) to our marker file.
+# This ensures it will be available for the 'after' script.
+basename "$LATEST_WAL" > "$MARKER_FILE"
+
+echo "Marked '${LATEST_WAL}' as the latest WAL file before backup."
