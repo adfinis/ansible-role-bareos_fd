@@ -64,6 +64,18 @@
     mode: "0751"
     path: "{{ bareos_fd_plugin_psql_wal_archive }}"
 
+# necessary to be able to point the FileSet resource
+# to the WAL archive even when clients use different paths.
+- name: plugins_postgresql | Create symlink to wal archive
+  ansible.builtin.file:
+    src: "{{ bareos_fd_plugin_psql_wal_archive }}"
+    dest: "{{ bareos_fd_plugin_psql_wal_archive_symlink }}"
+    owner: postgres
+    group: postgres
+    mode: "0751"
+    state: link
+    follow: false
+
 - name: plugins_postgresql | Make sure postgresql conf.d dir is present
   ansible.builtin.file:
     state: directory
@@ -110,34 +122,13 @@
   when:
     - bareos_fd_plugin_psql_wal_cleanup_enable
   block:
-    - name: plugins_postgresql | Deploy WAL cleanup script
+    - name: plugins_postgresql | Deploy before and after scripts
       ansible.builtin.template:
-        src: "templates/bareos-psql-wal-cleanup-script.sh.j2"
-        dest: "/usr/local/bin/bareos-psql-wal-cleanup.sh"
+        src: "templates/bareos-psql-{{ item }}-script.sh.j2"
+        dest: "/usr/local/bin/bareos-psql-{{ item }}.sh"
         owner: root
         group: root
         mode: "0751"
-      notify:
-        - Restart WAL archive timer
-
-    - name: plugins_postgresql | Create WAL cleanup service and timer
-      ansible.builtin.template:
-        src: "templates/bareos-psql-wal-cleanup.{{ item }}.j2"
-        dest: "/etc/systemd/system/bareos-psql-wal-cleanup.{{ item }}"
-        owner: root
-        group: root
-        mode: "0644"
       loop:
-        - timer
-        - service
-      notify:
-        - Restart WAL archive timer
-
-    - name: plugins_postgresql | Flush handlers
-      ansible.builtin.meta: flush_handlers
-
-    - name: plugins_postgresql | Enable and start WAL cleanup timer
-      ansible.builtin.service:
-        name: bareos-psql-wal-cleanup.timer
-        state: started
-        enabled: true
+        - before
+        - after

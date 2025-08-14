@@ -32,3 +32,6 @@ bareos_fd_plugin_psql_config_hba: >-
 # Where to store the WAL archive data
 bareos_fd_plugin_psql_wal_archive: >-
  /var/lib/pgsql/wal_archive
+
+# universal path for all distros
+bareos_fd_plugin_psql_wal_archive_symlink: /etc/bareos/pg-wal-archive

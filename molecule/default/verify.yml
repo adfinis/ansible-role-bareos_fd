@@ -3,6 +3,12 @@
   hosts: all
   become: true
   gather_facts: true
+  vars:
+    bareos_fd_nobackup_filename: .nomoleculebackup
+    bareos_fd_nobackup_excludes:
+      - /home
+      - /root
+      - /var/lib
 
   tasks:
     - name: Check if port 9102 is listening
@@ -46,8 +52,8 @@
 
     - name: Get nobackup file stats
       ansible.builtin.stat:
-        path: "{{ item }}"
-      loop: "{{ bareos_fd_nobackup_excludes }}/{{ bareos_fd_nobackup_filename }}"
+        path: "{{ item }}/{{ bareos_fd_nobackup_filename }}"
+      loop: "{{ bareos_fd_nobackup_excludes }}"
       register: _nobackup_files
 
     - name: Verify nobackup files exist
@@ -56,4 +62,4 @@
           - item.stat.exists
           - item.stat.pw_name == "bareos"
           - item.stat.gr_name == "bareos"
-      loop: "{{ _nobackup_files }}"
+      loop: "{{ _nobackup_files.results }}"

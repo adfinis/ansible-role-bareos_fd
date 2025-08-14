@@ -98,10 +98,8 @@ bareos_fd_rear_console_pass: "{{ lookup('ansible.builtin.password', '/dev/null',
 bareos_fd_plugin_psql_version: 15
 
 # Bareos does not cleanup the PostgreSQL WAL archive files on its own.
-# This option will spawn a systemd service that cleanes up the old files.
+# This option will spawn a before and after script, which can be called
+# by the PostgreSQL backup job on the Director.
+# This script will cleanup the files that are not necessary for the backup anymore.
 # This is disabled per default to avoid accidential file loss.
 bareos_fd_plugin_psql_wal_cleanup_enable: false
-bareos_fd_plugin_psql_wal_cleanup_max_age: 14
-
-# during the day to avoid potential overlap with backup process
-bareos_fd_plugin_psql_wal_cleanup_schedule: "*-*-* 14:00:00"

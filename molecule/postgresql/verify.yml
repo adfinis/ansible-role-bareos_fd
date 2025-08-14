@@ -31,11 +31,6 @@
         that:
           - ansible_facts.services[bareos_fd_service+".service"].state == "running"
 
-          # service is not actively running but disabled as it's called by a timer instead.
-          # no facts available about timers
-          - ansible_facts.services["bareos-psql-wal-cleanup.service"].state != "failed"
-          - ansible_facts.services["bareos-psql-wal-cleanup.service"].status == "disabled"
-
     - name: Check if port 9102 is listening
       ansible.builtin.wait_for:
         port: 9102
@@ -66,3 +61,32 @@
       register: _psql_result
       failed_when:
         - '"postgresql" not in _psql_result.version.raw | lower'
+
+    - name: Get WAL archive symlink stats
+      ansible.builtin.stat:
+        path: "{{ bareos_fd_plugin_psql_wal_archive_symlink }}"
+      register: _wal_symlink
+
+    - name: Test WAL archive symlink
+      ansible.builtin.assert:
+        that:
+          - _wal_symlink.stat.exists
+          - _wal_symlink.stat.islnk
+
+    - name: Get before and after script file stats
+      ansible.builtin.stat:
+        path: "/usr/local/bin/bareos-psql-{{ item }}.sh"
+      register: _script_results
+      loop:
+        - before
+        - after
+
+    - name: Test before and after scripts
+      ansible.builtin.assert:
+        that:
+          - item.stat.exists
+          - item.stat.executable
+          - item.stat.xoth
+          - item.stat.pw_name == "root"
+          - item.stat.gr_name == "root"
+      loop: "{{ _script_results.results }}"
