@@ -7,22 +7,15 @@ set -euo pipefail
 PG_WAL_ARCHIVE={{ bareos_fd_plugin_psql_wal_archive }}
 MARKER_FILE="/var/lib/postgresql/wal_cleanup_marker.txt"
 
-echo "Running post-backup cleanup script for PostgreSQL."
-
 if [ ! -f "$MARKER_FILE" ]; then
-  echo "Marker file not found. Skipping cleanup."
   exit 0
 fi
 
 # Read the filename that was marked as 'safe' by the pre-backup script.
 OLDEST_KEPT_WAL=$(cat "$MARKER_FILE")
 
-echo "Backup successful. Cleaning up WALs older than ${OLDEST_KEPT_WAL}."
-
 # Perform the cleanup using the filename from our marker.
 pg_archivecleanup -d "${PG_WAL_ARCHIVE}" "${OLDEST_KEPT_WAL}"
 
 # IMPORTANT: Remove the marker file so it's not accidentally reused.
 rm -f "$MARKER_FILE"
-
-echo "PostgreSQL WAL cleanup complete. "
