@@ -8,16 +8,31 @@ set -euo pipefail
 PG_WAL_ARCHIVE={{ bareos_fd_plugin_psql_wal_archive }}
 MARKER_FILE="/var/lib/postgresql/wal_cleanup_marker.txt"
 
-# Find the newest WAL file currently in the archive.
-# ls -1 lists one file per line, sort -r reverses the order, head -n 1 gets the top one.
-LATEST_WAL=$(ls -1 "${PG_WAL_ARCHIVE}"/???????????????????????? 2>/dev/null | sort -r | head -n 1)
+echo "Running pre-backup script for PostgreSQL." >&2
+echo "Using WAL Archive Path: ${PG_WAL_ARCHIVE}" >&2
 
-if [ -z "$LATEST_WAL" ]; then
-  # Ensure no old marker file is left behind.
-  rm -f "$MARKER_FILE"
+if [ ! -d "${PG_WAL_ARCHIVE}" ]; then
+  echo "Error: WAL archive directory does not exist at ${PG_WAL_ARCHIVE}" >&2
+  exit 1
+fi
+
+# Use find rather than ls due to possible huge amount of files
+# Redirect stderr to /dev/null to suppress any potential 'find' messages.
+# '|| true' ensures the script doesn't exit from a broken pipe signal.
+LATEST_WAL_PATH=$(find "${PG_WAL_ARCHIVE}" -maxdepth 1 -type f -name '????????????????????????' 2>/dev/null | sort -r 2>/dev/null | head -n 1 || true)
+
+# Check if the find command returned any file path.
+if [ -z "${LATEST_WAL_PATH}" ]; then
+  echo "WAL archive is empty or contains no standard WAL files. Nothing to mark." >&2
+  # Ensure no old marker file is left behind from a previous failed run.
+  rm -f "${MARKER_FILE}"
   exit 0
 fi
 
-# Write the basename of the file (just the filename) to our marker file.
-# This ensures it will be available for the 'after' script.
-basename "$LATEST_WAL" > "$MARKER_FILE"
+# Get just the filename from the full path.
+LATEST_WAL_BASENAME=$(basename "${LATEST_WAL_PATH}")
+
+# Write the filename to our marker file for the 'after' script to use.
+echo "${LATEST_WAL_BASENAME}" > "${MARKER_FILE}"
+
+echo "Successfully marked '${LATEST_WAL_BASENAME}' as the latest WAL file for backup." >&2
