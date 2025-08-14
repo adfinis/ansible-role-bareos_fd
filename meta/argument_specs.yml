@@ -104,8 +104,8 @@ argument_specs:
           https://docs.bareos.org/Configuration/Director.html#config-Dir_Job_ClientRunBeforeJob
 
           The scripts will be deployed to the following locations:
-          /usr/local/bin/bareos-psql-before-script.sh
-          /usr/local/bin/bareos-psql-after-script.sh
+          /usr/local/bin/bareos-psql-before.sh
+          /usr/local/bin/bareos-psql-after.sh
 
           This option is disabled per default to avoid accidential file removal.
 
