@@ -32,7 +32,7 @@
   community.crypto.openssl_csr:
     path: /etc/bareos/{{ bareos_fd_hostname }}-public.csr
     privatekey_path: /etc/bareos/{{ bareos_fd_hostname }}-private.key
-    common_name: "{{ bareos_fd_hostname | truncate(64, true, '') }}"  # cn has max_length of 64 chars
+    common_name: "{{ bareos_fd_hostname | truncate(64, true, '', 0) }}"  # cn has max_length of 64 chars
     owner: bareos
     group: bareos
     mode: "0644"
