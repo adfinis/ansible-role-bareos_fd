@@ -23,6 +23,17 @@
         that:
           - ( bareos_fd_plugin_psql_version | int) is number
 
+# pg8000 is required by plugin, but most distros don't offer a new-enough
+# version (pg8000 >= 1.16). Currently only works for Debian 13+ and Ubuntu 22+
+- name: plugins_postgresql | Install pg8000 if distro offers new-enough version
+  ansible.builtin.package:
+    name: python3-pg8000
+    state: present
+  when:
+    - ansible_facts.os_family == "Debian"
+    - (ansible_facts.distribution_major_version | int >= 13 and ansible_facts.distribution == "Debian") or
+      (ansible_facts.distribution_major_version | int >= 22 and ansible_facts.distribution == "Ubuntu")
+
 - name: plugins_postgresql | Install psycopg for community.postgresql
   ansible.builtin.package:
     name: python3-psycopg2
