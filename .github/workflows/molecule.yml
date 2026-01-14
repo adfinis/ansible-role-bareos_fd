@@ -70,10 +70,13 @@ jobs:
       matrix:
         config:
           - image: "debian12"
-          - image: "fedora40"
+          - image: "debian13"
+          - image: "fedora42"
+          - image: "fedora43"
           - image: "ubuntu2204"
           - image: "ubuntu2404"
           - image: "rockylinux9"
+          - image: "rockylinux10"
     steps:
       - name: checkout
         uses: actions/checkout@v5
