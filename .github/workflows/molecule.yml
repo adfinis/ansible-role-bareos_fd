@@ -72,7 +72,6 @@ jobs:
         config:
           - image: "debian12"
           - image: "debian13"
-          - image: "fedora41"
           - image: "fedora42"
           - image: "ubuntu2204"
           - image: "ubuntu2404"
