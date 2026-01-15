@@ -7,7 +7,7 @@ bareos_fd_debug_packages:
   - bareos-debuginfo
   - gdb
 
-bareos_fd_plugin_name: python
+bareos_fd_python_plugin: python
 bareos_fd_plugin_list:
   - name: mariabackup
     packages:
