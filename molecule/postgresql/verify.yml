@@ -16,6 +16,7 @@
       ansible.builtin.include_vars: "{{ item }}"
       with_first_found:
         - "{{ lookup('env', 'MOLECULE_PROJECT_DIRECTORY') }}/vars/{{ ansible_facts.distribution }}_{{ ansible_facts.distribution_major_version }}.yml"
+        - "{{ lookup('env', 'MOLECULE_PROJECT_DIRECTORY') }}/vars/{{ ansible_facts.distribution }}.yml"
         - "{{ lookup('env', 'MOLECULE_PROJECT_DIRECTORY') }}/vars/{{ ansible_facts.os_family }}.yml"
 
     - name: Enforce PostgreSQL service restart
@@ -52,6 +53,20 @@
       diff: true
       register: _result
       failed_when: _result.changed
+
+    # only applicable for newer distros like Debian 13+ and Ubuntu 22+
+    - name: Check if pg8000 package was installed
+      ansible.builtin.package:
+        name: python3-pg8000
+        state: present
+      check_mode: true
+      diff: true
+      register: _pg8000_result
+      failed_when: _pg8000_result.changed
+      when:
+        - ansible_facts.os_family == "Debian"
+        - (ansible_facts.distribution_major_version | int >= 13 and ansible_facts.distribution == "Debian") or
+          (ansible_facts.distribution_major_version | int >= 22 and ansible_facts.distribution == "Ubuntu")
 
     - name: Test postgresql peer auth for root
       community.postgresql.postgresql_info:
