@@ -12,56 +12,10 @@ on:
 
 jobs:
 
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-      - name: checkout
-        uses: actions/checkout@v5
-      - name: ansible-lint
-        uses: ansible/ansible-lint@main
-
   test:
-    needs:
-      - lint
-    uses: adfinis/github-workflows-bareos/.github/workflows/molecule.yaml@v0.5.2
-    with:
-      systems: |
-        {
-          "config": [
-            {
-              "image": "debian",
-              "tag": "latest"
-            },
-            {
-              "image": "debian",
-              "tag": "bullseye"
-            },
-            {
-              "image": "enterpriselinux",
-              "tag": "latest"
-            },
-            {
-              "image": "fedora",
-              "tag": "40"
-            },
-            {
-              "image": "fedora",
-              "tag": "latest"
-            },
-            {
-              "image": "ubuntu",
-              "tag": "jammy"
-            },
-            {
-              "image": "ubuntu",
-              "tag": "latest"
-            }
-          ]
-        }
+    uses: adfinis/github-workflows-bareos/.github/workflows/molecule.yaml@v0.8.0
 
   test_postgresql:
-    needs:
-      - lint
     runs-on: ubuntu-22.04  # ubuntu latest will for all RHEL-based distros: https://github.com/rocky-linux/sig-cloud-instance-images/issues/56
     container:
       image: python:3.9

@@ -1,8 +1,9 @@
 ---
 - name: Prepare
   hosts: all
-  become: true
-  gather_facts: false
+  # has to be false to avoid become issues on RHEL container images
+  become: false
+  gather_facts: true
 
   roles:
     - role: robertdebock.bootstrap

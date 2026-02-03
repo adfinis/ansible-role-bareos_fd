@@ -1,7 +1,8 @@
 ---
 - name: Verify
   hosts: all
-  become: true
+  # has to be false to avoid become issues on RHEL container images
+  become: false
   gather_facts: true
   vars:
     bareos_fd_nobackup_filename: .nomoleculebackup
