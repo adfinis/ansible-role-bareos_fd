@@ -24,7 +24,7 @@ jobs:
   test:
     needs:
       - lint
-    uses: adfinis/github-workflows-bareos/.github/workflows/molecule.yaml@feat/geerlingguy_roles
+    uses: adfinis/github-workflows-bareos/.github/workflows/molecule-geerlingguy.yaml@feat/geerlingguy_roles
 
   test_postgresql:
     needs:
