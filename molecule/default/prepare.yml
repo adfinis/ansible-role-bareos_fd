@@ -8,3 +8,9 @@
     #- role: robertdebock.bootstrap
     - role: adfinis.bareos_repository
       bareos_repository_enable_tracebacks: true
+
+  pre_tasks:
+    - name: Install dependencies
+      ansible.builtin.package:
+        name: gpg
+        state: present
