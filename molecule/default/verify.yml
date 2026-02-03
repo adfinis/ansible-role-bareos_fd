@@ -1,7 +1,7 @@
 ---
 - name: Verify
   hosts: all
-  become: true
+  become: false
   gather_facts: true
   vars:
     bareos_fd_nobackup_filename: .nomoleculebackup
