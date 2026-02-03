@@ -24,45 +24,7 @@ jobs:
   test:
     needs:
       - lint
-    uses: adfinis/github-workflows-bareos/.github/workflows/molecule.yaml@v0.7.1
-    with:
-      systems: |
-        {
-          "config": [
-            {
-              "image": "debian",
-              "tag": "latest"
-            },
-            {
-              "image": "debian",
-              "tag": "bookworm"
-            },
-            {
-              "image": "debian",
-              "tag": "bullseye"
-            },
-            {
-              "image": "enterpriselinux",
-              "tag": "latest"
-            },
-            {
-              "image": "fedora",
-              "tag": "41"
-            },
-            {
-              "image": "fedora",
-              "tag": "latest"
-            },
-            {
-              "image": "ubuntu",
-              "tag": "jammy"
-            },
-            {
-              "image": "ubuntu",
-              "tag": "latest"
-            }
-          ]
-        }
+    uses: adfinis/github-workflows-bareos/.github/workflows/molecule.yaml@feat/geerlingguy_roles
 
   test_postgresql:
     needs:
