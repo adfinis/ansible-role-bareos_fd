@@ -1,6 +1,7 @@
 ---
 - name: Prepare
   hosts: all
+  # has to be false to avoid become issues on RHEL container images
   become: false
   gather_facts: true
 
