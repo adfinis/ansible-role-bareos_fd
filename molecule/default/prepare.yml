@@ -5,6 +5,6 @@
   gather_facts: true
 
   roles:
-    - role: robertdebock.bootstrap
+    #- role: robertdebock.bootstrap
     - role: adfinis.bareos_repository
       bareos_repository_enable_tracebacks: true
