@@ -24,7 +24,7 @@ jobs:
   test:
     needs:
       - lint
-    uses: adfinis/github-workflows-bareos/.github/workflows/molecule.yaml@fix/ci/workflow_checkout_path
+    uses: adfinis/github-workflows-bareos/.github/workflows/molecule.yaml@v0.7.0
     with:
       systems: |
         {
