@@ -33,6 +33,7 @@
     group: bareos
     mode: "0640"
     backup: "{{ bareos_fd_backup_configurations }}"
+  no_log: true
   notify:
     - Check configuration
     - Restart bareos-filedaemon
@@ -82,6 +83,7 @@
   loop: "{{ bareos_fd_directors }}"
   loop_control:
     label: "{{ item.name }}"
+  no_log: true
   notify:
     - Check configuration
     - Restart bareos-filedaemon
