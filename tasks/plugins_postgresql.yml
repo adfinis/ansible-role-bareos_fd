@@ -59,9 +59,7 @@
 - name: plugins_postgresql | Enable local peer access for root user
   ansible.builtin.lineinfile:
     path: "{{ bareos_fd_plugin_psql_config_hba }}"
-    line: >-
-      local all root peer  # Ansible managed:
-      Do NOT remove line manually! Managed by bareos_fd role
+    line: "local\tall\troot\t\tpeer\t# Ansible managed: Do NOT remove line manually! Managed by bareos_fd role"
     regexp: '^local\s+all\s+root\s+peer'  # match for any amount of spaces
     state: present
     backup: true
