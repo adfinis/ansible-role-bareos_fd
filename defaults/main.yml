@@ -103,3 +103,6 @@ bareos_fd_plugin_psql_version: 15
 # This script will cleanup the files that are not necessary for the backup anymore.
 # This is disabled per default to avoid accidential file loss.
 bareos_fd_plugin_psql_wal_cleanup_enable: false
+
+# Do not log sensitive data
+bareos_fd_ansible_no_log: true
