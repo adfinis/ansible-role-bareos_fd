@@ -5,7 +5,7 @@ bareos_fd_encryption_packages:
   - python3-cryptography
 
 bareos_fd_service: bareos-filedaemon
-bareos_fd_plugin_name: python3
+bareos_fd_python_plugin: python3
 bareos_fd_plugin_dir: "/usr/lib64/bareos/plugins"
 
 # ReaR packages. Only installed when bareos_fd_rear_enable is true
