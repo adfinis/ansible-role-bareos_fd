@@ -24,6 +24,7 @@
     owner: bareos
     group: bareos
     mode: "0600"
+  no_log: "{{ bareos_fd_ansible_no_log | bool }}"
   when:
     - bareos_fd_encryption_private_key != ""
   ignore_errors: "{{ ansible_check_mode }}"
@@ -58,6 +59,7 @@
     owner: bareos
     group: bareos
     mode: "0600"
+  no_log: "{{ bareos_fd_ansible_no_log | bool }}"
   notify:
     - Check configuration
     - Restart bareos-filedaemon
