@@ -28,6 +28,10 @@ bareos_fd_plugin_list:
     packages:
       - bareos-filedaemon-percona-xtrabackup-python-plugin
 
+  - name: proxmox
+    packages:
+      - bareos-filedaemon-proxmox-python-plugin
+
 ##
 # Bareos PostgreSQL backup plugin
 ##

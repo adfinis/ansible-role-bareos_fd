@@ -39,6 +39,23 @@
       when:
         - ansible_facts.os_family != "Archlinux"  # not supported for FD Plugins
 
+    - name: plugins_proxmox | stat systemd/system/ service override dir
+      ansible.builtin.stat:
+        path: /etc/systemd/system/bareos-filedaemon.service.d
+      register: _bareos_fd_service_d
+
+    - name: plugins_proxmox | stat group override conf
+      ansible.builtin.stat:
+        path: /etc/systemd/system/bareos-filedaemon.service.d/group_override.conf
+      register: _group_override_conf
+
+    - name: plugins_proxmox | Verify group_override.conf
+      ansible.builtin.assert:
+        that:
+          - _group_override_conf.stat.exists
+          - _group_override.conf.stat.pw_name == "root"  # owner
+          - _group_override.conf.stat.gr_name == "root"
+
     - name: plugins_mariadb | Get /root/.my.cnf stats
       ansible.builtin.stat:
         path: /root/.my.cnf
