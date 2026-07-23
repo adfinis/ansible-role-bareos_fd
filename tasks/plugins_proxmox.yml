@@ -1,6 +1,6 @@
 ---
 
-- name: plugins_proxmox | ensure systemd service directory is present
+- name: plugins_proxmox | Ensure systemd service directory is present
   ansible.builtin.file:
     state: directory
     path: "/etc/systemd/system/{{ bareos_fd_service }}.service.d"
@@ -10,7 +10,7 @@
 
 # proxmox plugin requires FD to run as root user and root group
 # ref https://docs.bareos.org/TasksAndConcepts/Plugins.html#proxmox-plugin
-- name: plugins_proxmox | add systemd service group override
+- name: plugins_proxmox | Add systemd service group override
   ansible.builtin.template:
     src: group_override.conf.j2
     dest: "/etc/systemd/system/{{ bareos_fd_service }}.service.d/group_override.conf"
