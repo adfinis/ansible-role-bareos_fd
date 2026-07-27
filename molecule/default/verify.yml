@@ -57,7 +57,7 @@
               - _group_override_conf.stat.exists
               - _group_override.conf.stat.pw_name == "root"  # owner
               - _group_override.conf.stat.gr_name == "root"
-      when: ansible_facts.os_family == "Debian"
+      when: ansible_facts.distribution == "Broken"
 
     - name: plugins_mariadb | Get /root/.my.cnf stats
       ansible.builtin.stat:
