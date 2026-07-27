@@ -5,23 +5,33 @@ dependency:
   options:
     role-file: molecule/postgresql/requirements.yml
     requirements-file: molecule/postgresql/requirements.yml
-lint: |
-  set -e
-  yamllint .
-  ansible-lint
 driver:
   name: docker
 platforms:
-  - name: "bareosfd-${image:-fedora40}${TOX_ENVNAME}"
-    image: "geerlingguy/docker-${image:-fedora40}-ansible:latest"
+  - name: "bareosfd-${image:-ubuntu2604}${TOX_ENVNAME}"
+    image: "geerlingguy/docker-${image:-ubuntu2604}-ansible:latest"
     command: "/sbin/init"
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     cgroupns_mode: host
     privileged: true
     pre_build_image: true
-    systemd: true
 provisioner:
   name: ansible
+  config_options:
+    defaults:
+      roles_path: "~/.ansible/roles:${MOLECULE_PROJECT_DIRECTORY}/.."
 verifier:
   name: ansible
+
+scenario:
+  test_sequence:
+    - dependency
+    - destroy
+    - syntax
+    - create
+    - prepare
+    - converge
+    - idempotence
+    - verify
+    - destroy
