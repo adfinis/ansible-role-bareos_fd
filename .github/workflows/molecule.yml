@@ -13,7 +13,7 @@ on:
 jobs:
 
   test:
-    uses: adfinis/github-workflows-bareos/.github/workflows/molecule.yaml@eedff15b52be3c117bd5f7a28492494596399311 # v0.8.0
+    uses: adfinis/github-workflows-bareos/.github/workflows/molecule.yaml@7b2184d76870cc7c281d081a6ebabc15264dcc1f
 
   test_postgresql:
     runs-on: ubuntu-22.04  # ubuntu latest will for all RHEL-based distros: https://github.com/rocky-linux/sig-cloud-instance-images/issues/56
