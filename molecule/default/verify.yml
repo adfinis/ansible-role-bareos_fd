@@ -39,6 +39,7 @@
       when:
         - ansible_facts.os_family != "Archlinux"  # not supported for FD Plugins
 
+    # This is currently BROKEN - the plugin is not available from download.bareos.org
     - name: Proxmox specific checks only on Debian (family)
       block:
         - name: plugins_proxmox | stat systemd/system/ service override dir
@@ -57,7 +58,7 @@
               - _group_override_conf.stat.exists
               - _group_override.conf.stat.pw_name == "root"  # owner
               - _group_override.conf.stat.gr_name == "root"
-      when: ansible_facts.distribution == "Broken"
+      when: ansible_facts.distribution == "Broken"  # proxmox plugin not available - see above
 
     - name: plugins_mariadb | Get /root/.my.cnf stats
       ansible.builtin.stat:
