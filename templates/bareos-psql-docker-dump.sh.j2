@@ -3,7 +3,7 @@
 # simple script that runs pg_dump via docker exec and backs up all PostgreSQL databases in the container $CONTAINER_NAME
 
 CONTAINER_NAME="{{ bareos_fd_plugin_psql_docker_container }}"
-DB_USER="{{ bareos_fd_plugin_psql_db_user }}"
+DB_USER="{{ bareos_fd_plugin_psql_docker_db_user }}"
 BACKUP_DIR="{{ bareos_fd_plugin_psql_backup_dir }}"
 
 set -euo pipefail
