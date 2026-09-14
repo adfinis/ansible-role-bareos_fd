@@ -16,6 +16,10 @@
     - Check configuration
     - Restart bareos-filedaemon
   ignore_errors: "{{ ansible_check_mode }}"
+  # skip installation if plugin does not require packages
+  when: 
+    - item.packages is defined
+    - item.packages | length > 0
 
 # while not an actual plugin, still treat PSQL running in Docker with the same logic
 - name: plugins | Deploy PostgreSQL Docker backup script
