@@ -17,7 +17,7 @@
     - Restart bareos-filedaemon
   ignore_errors: "{{ ansible_check_mode }}"
   # skip installation if plugin does not require packages
-  when: 
+  when:
     - item.packages is defined
     - item.packages | length > 0
 
