@@ -113,6 +113,17 @@ argument_specs:
 
           This option is disabled per default to avoid accidential file removal.
 
+      bareos_fd_plugin_psql_docker_container:
+        type: "str"
+        description: "Name of the PostgreSQL Docker container"
+      bareos_fd_plugin_psql_docker_db_user:
+        type: "str"
+        description: "User that will be used in Docker via pg_dump -U <user>"
+      bareos_fd_plugin_psql_docker_backup_dir:
+        type: "str"
+        description: "Directory where the backup dumps should be written to"
+        default: /var/backup/postgresql
+
       bareos_fd_nobackup_excludes:
         type: "list"
         description: >-

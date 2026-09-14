@@ -16,3 +16,14 @@
     - Check configuration
     - Restart bareos-filedaemon
   ignore_errors: "{{ ansible_check_mode }}"
+
+# while not an actual plugin, still treat PSQL running in Docker with the same logic
+- name: plugins | Deploy PostgreSQL Docker backup script
+  ansible.builtin.template:
+    src: templates/bareos-psql-docker-dump.sh.j2
+    dest: "/usr/local/bin/bareos-psql-docker-dump.sh"
+    owner: root
+    group: root
+    mode: "0751"
+  when:
+    - '"postgresql_docker" in bareos_fd_plugins'

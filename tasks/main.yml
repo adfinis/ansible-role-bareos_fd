@@ -132,6 +132,14 @@
     - bareos_fd_plugins is iterable
     - '"postgresql" in bareos_fd_plugins'
 
+- name: Import postgresql_docker plugin tasks
+  ansible.builtin.import_tasks:
+    file: plugins_postgresql_docker.yml
+  when:
+    - bareos_fd_plugins is defined
+    - bareos_fd_plugins is iterable
+    - '"postgresql_docker" in bareos_fd_plugins'
+
 - name: Import ldap plugin tasks
   ansible.builtin.import_tasks:
     file: plugins_ldap.yml
