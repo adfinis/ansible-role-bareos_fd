@@ -8,7 +8,7 @@ bareos_fd_encryption_packages:
   - python311-cryptography
 
 bareos_fd_plugin_dir: "/usr/lib64/bareos/plugins"
-bareos_fd_plugin_name: python3
+bareos_fd_python_plugin: python3
 bareos_fd_plugin_list:
   - name: mariabackup
     packages:
