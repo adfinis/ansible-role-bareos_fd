@@ -76,4 +76,9 @@
           enabled: false
       bareos_fd_plugins:
         - postgresql
+        - postgresql_docker
       bareos_fd_plugin_psql_wal_cleanup_enable: true
+
+      bareos_fd_plugin_psql_docker_db_user: postgres
+      bareos_fd_plugin_psql_docker_container: molecule
+      bareos_fd_plugin_psql_docker_backup_dir: /var/backup/postgresql/molecule
