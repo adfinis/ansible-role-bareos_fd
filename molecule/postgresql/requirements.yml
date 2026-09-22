@@ -8,4 +8,6 @@ roles:
 collections:
   - name: community.crypto
   - name: community.general
+  # pinned to v4.2.0 until geerlingguy.postgresql merges https://github.com/geerlingguy/ansible-role-postgresql/pull/306
   - name: community.postgresql
+    version: 4.2.0
