@@ -81,4 +81,4 @@
 
       bareos_fd_plugin_psql_docker_db_user: postgres
       bareos_fd_plugin_psql_docker_container: molecule
-      bareos_fd_plugin_psql_docker_backup_dir: /var/backup/postgresql/molecule
+      bareos_fd_plugin_psql_docker_backup_dir: /var/backups/postgresql/molecule
