@@ -106,3 +106,10 @@ bareos_fd_plugin_psql_wal_cleanup_enable: false
 
 # Do not log sensitive data
 bareos_fd_ansible_no_log: true
+
+##
+# Defaults for the custom docker postgresql backup plugin
+##
+
+# directory for db dumps
+bareos_fd_plugin_psql_docker_backup_dir: /var/backups/postgresql

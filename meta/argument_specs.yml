@@ -122,7 +122,7 @@ argument_specs:
       bareos_fd_plugin_psql_docker_backup_dir:
         type: "str"
         description: "Directory where the backup dumps should be written to"
-        default: /var/backup/postgresql
+        default: /var/backups/postgresql
 
       bareos_fd_nobackup_excludes:
         type: "list"
